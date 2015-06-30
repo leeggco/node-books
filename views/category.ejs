@@ -1,0 +1,25 @@
+<% include header %>
+	<div class="row books_list">
+		<h3 class="cath3">类别：<%= json[0].name %>，共 <%= json[0].books.length %> 本</h3>
+		<% for(var i = 0; i < json[0].books.length; i++) {%>
+	    <div class="col-md-6 book_wrap">
+	      <% if(json[0].books[i].average > 0){ %>
+	        <div class="col-md-2 pull-right average-box" title="豆瓣评分：<%= json[0].books[i].average %>分"><span class="average-count text-danger pull-right"><%= json[0].books[i].average %></span><img class="pull-right douban-icon" src="http://img3.douban.com/pics/douban-icons/favicon_16x16.png" alt=""></div>
+	      <% }%>
+	      <div class="col-md-4">
+	        <div class="bookCover">
+	          <a href="/detail/<%= json[0].books[i].bid %>" title="<%= json[0].books[i].name %>"><img src="<%= json[0].books[i].image %>" width="150" alt="<%= json[0].books[i].name %>" class="coverPic"></a>
+	        </div>
+	      </div>
+	      <div class="col-md-6 inctro">
+	        <h3 class="book-name"><a href="/detail/<%= json[0].books[i].bid %>" title="<%= json[0].books[i].name %>"><%= json[0].books[i].name %></a></h3>
+	        <p><strong>作者：</strong> <%= json[0].books[i].author %></p>
+	        <p><strong>出版日期：</strong> <%= json[0].books[i].press_time %></p>
+	        <p><strong>页数：</strong> <%= json[0].books[i].page %> </p>
+	        <p><strong>ISBN：</strong> <%= json[0].books[i].isbn %> </p>
+	        <p><strong>分类：</strong> <%= json[0].name %></p>
+	      </div>
+	    </div>
+		<% } %>
+	</div>
+<% include footer %>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title><%= title %> </title>
+  <link rel='stylesheet' href='/stylesheets/style.css'/>
+  <link rel='stylesheet' href='/stylesheets/bootstrap.min.css'/>
+  <script src="/javascripts/jquery-1.7.2.min.js"></script>
+</head>
+<body>
+  <div class="header container">
+    <div class="row">
+
+      <div class="col-md-8">
+        <h3>天天书屋</h3>
+        <p>这里只有一些还不错的电子书。如果喜欢，请帮忙向同事和同学推荐本站。</p>
+      </div>
+
+      <div class="col-md-4 mt30">
+        <form class="form-inline pull-right" action="/s" method="get">
+          <div class="form-group">
+            <input type="text" class="form-control" name="wd" id="exampleInputPassword3" placeholder="输入书籍名称">
+          </div>
+          <button type="submit" class="btn btn-default">搜索</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row-wrap">
+      <div class="login_bar pull-right">
+        <% if(user) { %>
+          <a href="/u/<%= user %>" title="<%= user %>"><img src="<%= gravatar %>?s=24" class="gravatar" width="24" alt=""><span><%= user %></span></a> &nbsp;|&nbsp; <a href="/signout">退出</a>  
+        <% } else {%>
+          <a href="/signup">注册</a> &nbsp;|&nbsp; <a href="/signin">登录</a>  
+        <% } %>
+      </div>
+      <ul class="nav nav-tabs">
+
+        <li role="presentation" <% if(current == 'home') { %> class="active" <% } %> ><a href="http://localhost:3000/">首页</a></li>
+        <li role="presentation" <% if(current == 'newbooks') { %> class="active" <% } %> ><a href="http://localhost:3000/newbooks">最新收录</a></li>
+        <li role="presentation"<% if(current == 'dedicate') { %> class="active" <% } %> ><a href="/dedicate">贡献排行</a></li>
+        <li role="presentation"><a href="#">社区</a></li>
+        <li role="presentation"<% if(current == 'new') { %> class="active" <% } %>><a href="/book/new">新书上传</a></li>
+      </ul>
+    </div>

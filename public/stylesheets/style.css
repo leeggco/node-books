@@ -1,0 +1,114 @@
+
+.mt30 {margin-top: 30px;}
+.mt50 {margin-top: 50px;}
+.mt {height:28px; line-height:28px; text-indent: .4em; border-left:3px solid #333; background-color: #f4f4f4; }
+.pgcontent {min-height:500px;}
+.container {font-family: 'Microsoft Yahei','黑体'}
+.footer .tc {text-align: center}
+.add_item {margin-top: 10px;}
+.btn-primary {margin-top: 10px; margin-left: 75px;}
+.detail-top {margin-top: 30px;}
+.des-box {margin-top: 30px; line-height:170%; }
+.book-name {margin-top: 0;}
+.books_list {margin-top: 10px;}
+.form-group .book-inctor {height:523px;}
+.new-headh2 {margin-bottom: 20px; margin-left: 200px;}
+.btn-save {padding:0 20px; margin-left: 130px;}
+.coverPic {box-shadow: 1px 1px 20px #999; border-radius: 2px;}
+.des-box .elp {text-indent:2em; font-size:14px; line-height:170%; color:#444;}
+.hots_list {height:160px; margin-top: 70px; position:relative;}
+.hots_list li {bottom:0; list-style-type: none; box-shadow: 1px 1px 20px #999; position:absolute; }
+.hots_list .host_2 img, .hots_list .host_4 img {width:140px;}
+.hots_list .host_1 img, .hots_list .host_5 img {width:130px;}
+.hots_list .host_0 img, .hots_list .host_6 img {width:120px;}
+.hots_list .host_0 {width:120px; left:50%; margin-left:-520px;}
+.hots_list .host_6 {width:120px; left:50%; margin-left:400px;}
+.hots_list .host_1 {width:130px; left:50%; margin-left:-380px;}
+.hots_list .host_5 {width:130px; left:50%; margin-left:250px;}
+.hots_list .host_2 {width:140px; left:50%; margin-left:-230px;}
+.hots_list .host_4 {width:140px; left:50%; margin-left: 93px;}
+.hots_list .host_3 {width:150px; left:50%; margin-left:-73px;}
+.host_wrap { margin-top: 40px;}
+.category_wrap {margin-top:50px;}
+.category_list li {float:left; list-style-type: none; margin-left:10px;}
+.login_bar {margin-top: 15px;}
+.inctro {margin-left: 20px;}
+.average-count {font-size:24px; margin-left: 10px; }
+.average-box {line-height:24px; line-height:24px;}
+.books_list .bookCover {height:215px; }
+.books_list .book_wrap {margin-top: 20px;}
+.books_list .inctro {margin-left: 0;}
+.books_list .douban-icon {margin-top: 4px;}
+.books_list .book-name {font-size:16px; line-height:170%;}
+.user-m {margin-left: 200px; margin-bottom: 30px; margin-top: 50px;}
+.btn-signup {margin-left: -15px; margin-right: 10px;}
+.showSignin, .showSignup {min-height:480px;}
+.login_bar .gravatar {margin-right: 6px; margin-top: -1px; border-radius: 10%;}
+.comment-wrap .mate {margin-top: 5px;}
+.gravatar {border-radius:10%; box-shadow: 0 1px 0 #f2f4f5;}
+.comment-box {margin: 0 20px; padding-bottom: 8px; line-height:170%; margin-top: 6px; border-bottom:1px solid #ddd;}
+.item-content-wrap .comment-box {border-bottom:0; border-top:1px solid #eee; padding-top: 6px; margin-right: 0;}
+.item-content-wrap {margin-left: 45px;}
+.item-content-ft { font-size: 12px}
+.item-content-ft .date { color:#999; }
+.item-content-ft .reply {display:none; color:#999; padding-left: 15px; margin-left: 10px; background: url(../images/sprites-1.9.2-03.png) no-repeat 0 -12px ;}
+.item-content-ft .reply:hover {color:#337ab7;  background: url(../images/sprites-1.9.2-03.png) no-repeat 0 1px ;}
+.comment-box .gravatar {margin-top: 7px;}
+.item-content-wrap .whosreply { color:#999; }
+.reply-box .btn-primary {margin-top: 0; margin-left: 5px;}
+.reply-box {display:none;}
+.reply-box .text-box {padding-right: 0;}
+.reply-box .btn-box {padding-left: 0;}
+.detail-top .slide-rd {padding-right: 25px; margin-bottom: 25px;}
+.recommendation {margin-top: 0; text-indent:1em; padding-bottom: 8px; padding-top: 8px; border-left: 3px solid #333; background-color: #f4f4f4;}
+. {box-shadow: 1px 1px 20px #999;}
+.slide-rd .rd-item {margin-left: 12px; margin-top: 20px;}
+.slide-rd .mate {margin-left: 100px;}
+.slide-rd2 .mate {margin-left: 60px;}
+.slide-rd2 .vtime {color:#999;}
+.cath3 {margin-left: 25px;}
+.pageNav {margin-top: 50px; margin-bottom: 50px;}
+.dedicate_wrap { margin-top: 15px;}
+.dedicate_wrap .username { margin-top: 5px;  margin-bottom: 3px;}
+.dedicate_wrap .item { margin-top: 15px;}
+.dedicate_wrap .item .gravatar { border-radius: 10%;}
+.userCenter .avatar img {border-radius:5px; width:100px; height:100px;}
+.userCenter .avatar {margin:18px;}
+.profile-hd, .profile-section-wrap {margin-top: 25px; margin-left: 20px; border: 1px solid #ddd;border-radius: 4px;box-shadow: 0 1px 0 #f2f4f5;color: #666;}
+.profile-hd .mate {margin-top: 25px; margin-right: 18px;}
+.profile-hd-info {margin-top: 20px;}
+.profile-hd-info .nickname {font-size:20px; color: #222; }
+.profile-section-wrap {padding-bottom: 15px;}
+.profile-section-wrap .bookCover {margin-right: 15px;}
+.profile-section-wrap .title {font-size:16px;}
+.profile-section-wrap .mate {font-size:12px;}
+.profile-section-wrap .pdv {font-size:12px;}
+.profile-section-wrap .book-edit {margin-right: 15px; margin-top: 5px; visibility: hidden;}
+.profile-section-wrap .book-edit a {color:#999}
+.profile-section-wrap .book-edit a:hover {color:#337ab7}
+.profile-section-wrap .thanks {margin-top: 10px; margin-right: 12px;}
+.profile-section-wrap .thanks .icon, .dedicate-user .icon {display:inline-block; width:20px; height:17px; background:url(../images/sprites-1.9-03.png) no-repeat left top;}
+.profile-section-wrap .thanks .icon:hover, .dedicate-user .icon:hover { background:url(../images/sprites-1.9-03.png) no-repeat left -22px;}
+.profile-section-name {height:26px; font-size:14px; margin-top: 10px; text-indent:1em; font-weight: bold; border-bottom:1px solid #EEE;}
+.profile-section-item {margin-left: 15px; margin-top: 15px;}
+.dedicate-user {margin-top: 15px; margin-left: 20px; color:#999;}
+.dedicate-user .icon {cursor:pointer;}
+.dedicate-user .iconActived {cursor:default; background:url(../images/sprites-1.9-03.png) no-repeat left -22px;}
+.comment-float {color:#ccc;}
+.user-visitor .profile-section-wrap {margin-left: 0; margin-right: 20px;}
+.profile-info {margin: 0 15px; margin-top: 15px; }
+.profile-module {border-top: 1px solid #eee; padding-top: 20px; margin-bottom: 20px;}
+.profile-module h5 {float:left; display:inline; width:150px; text-align: right; }
+.profile-module .avatar-preview {width:100px; margin-right: 15px;}
+.profile-module-desc {float:left; display:inline; margin-left: 40px;}
+.profile-gender label {margin-right: 15px;   font-weight: 500; }
+.profile-gender {margin-top: 10px;}
+.profile-description input {width:400px;}
+.profile-location input {width:150px;}
+.avatar-edit-layort {width:100%; height:100%; position:fixed; left:0; top:0; background: rgba(0,0,0,0.3); display:none;}
+.avatar-edit-box {width:440px; padding:20px; border-radius:10px; position:fixed; left:50%; margin-left: -220px; margin-top: -15%; top:50%; border: 1px solid #888;box-shadow: 0 0 80px 0 rgba(0,0,0,.4);background: #fff;}
+.btn-crop {margin-left: 0;}
+.cance-crop {display:inline-block; margin-right: 10px; margin-top: 18px;}
+.crop-mate {margin-top: 10px;}
+.detail-top {position:relative;}
+.average-wrap {position:absolute; right:50px; top:15px; }

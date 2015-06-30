@@ -1,0 +1,96 @@
+<% include header %>
+	<div class="row userCenter pgcontent">
+		<div class="col-md-8">
+			<div class="profile-hd clearfix">
+				<div class="mate pull-right text-center">
+					<% if(user === json.username ) {%>
+						<p class="edit"><a href="/people/uedit">编辑个人资料</a></p>
+					<% } %>
+					<h5 title="上传书籍能获得贡献值哦！">贡献值</h5>
+					<% if(json.devote_count <= 0 ) {%>
+						<p title="上传书籍能获得贡献值哦！">〇</p>
+					<% }else { %>
+						<p><%= json.devote_count %></p>
+					<% } %>
+				</div>
+				<div class="avatar pull-left">
+					<img src="<%= json.gravatar %>?s=100" alt="<%= json.username %>">
+				</div>
+				<div class="profile-hd-info">
+					<p class="nickname"><%= json.username %></p>
+					
+					<% if(json.location) {%>
+						<p class="location"><%= json.location %></p>
+					<% }else {%>
+						<p class="location">火星</p>
+					<% } %>
+
+					<% if(json.intro) {%>
+						<p><%= json.intro %></p>
+					<% }else {%>
+						<p>TA很懒，一句话介绍都不填，大家不要学TA!</p>
+					<% } %>
+				</div>
+			</div>
+
+			<div class="profile-section-wrap">
+				<% if(user === json.username ) {%>
+				<h2 class="profile-section-name">我的贡献</h2>
+				<% } else { %>
+				<h2 class="profile-section-name">TA的贡献</h2>
+				<% } %>
+				<% for(var i=0; i < json.devote_list.length; i++) { %>
+					<div class="profile-section-item clearfix">
+						<div class="pull-right">
+							<div class="book-edit"><a href="/book/edit/<%= json.devote_list[i].bid %>">编辑</a></div>
+							<div class="thanks text-center" title="收到<%= json.devote_list[i].thanks.length %>个感谢">
+								<span class="icon"></span>
+								<p class="count"><%= json.devote_list[i].thanks.length %></p>
+							</div>
+						</div>
+						<div class="bookCover pull-left">
+						<a href="/detail/<%= json.devote_list[i].bid %>" title="<%= json.devote_list[i].name %>"><img src="<%= json.devote_list[i].image %>" width="60" alt="<%= json.devote_list[i].name %>" class="coverPic"></a>
+						</div>
+						<div class="book-info">
+							<p class="title"><a href="/detail/<%= json.devote_list[i].bid %>" title="<%= json.devote_list[i].name %>"><%= json.devote_list[i].name %></a></p>
+							<p class="mate">
+								<span>贡献时间：2015年6月8日</span>
+							</p>
+							<p class="pdv">
+								<span>下载次数：<%= json.devote_list[i].dv %>次</span>，
+ 								<span>浏览次数：<%= json.devote_list[i].pv %>次</span>
+							</p>
+						</div>
+					</div>
+				<% } %>
+			</div>
+		</div>
+
+
+		<% if(visitors.length > 0){ %>
+    <div class="col-md-4 slide-rd slide-rd2 user-visitor">
+    	<div class="profile-section-wrap">
+    	<h2 class="profile-section-name">访客记录</h2>
+	      <% for(var i = 0; i < visitors.length; i++) {%>
+	        <div class="rd-item clearfix">
+	          <a href="/u/<%= visitors[i].visitors.user.username %>" class="pull-left"><img src="<%= visitors[i].visitors.user.gravatar %>?s=48" class="gravatar" width="48" alt=""></a>
+	          <div class="mate ">
+	            <p class="username"><a href="/u/<%= visitors[i].visitors.user.username %>"><%= visitors[i].visitors.user.username %></a></p>
+	            <p class="vtime date"><%= moment(visitors[i].visitors.at).format('YYYY-MM-DD HH:mm') %></p>
+	          </div>
+	        </div>
+	      <% } %>
+    	</div>
+    </div>
+    <% } %>
+	</div>
+	<script>
+		$(document).ready(function(){
+			$('.profile-section-item').hover(function(){
+				$(this).find('.book-edit').css('visibility','visible');
+			}, function(){
+				$(this).find('.book-edit').css('visibility','hidden');
+			})
+		})
+	</script>
+<% include footer %>

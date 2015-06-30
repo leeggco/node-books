@@ -1,0 +1,122 @@
+<% include header %>
+	<script src="/javascripts/jquery.Jcrop.min.js"></script>
+	<script src="/javascripts/ajaxfileupload.js"></script>
+	<link rel='stylesheet' href='/stylesheets/jquery.Jcrop.min.css'/>
+	<div class="row userCenter pgcontent">
+		<div class="col-md-8">
+			<div class="profile-hd clearfix">
+				<div class="profile-info zg-clear">
+					<a href="/u/<%= json.username %>" class="zg-link-litblue pull-right">返回个人主页</a>
+					<p class="profile-mbox-title"><a href="/u/<%= json.username %>"><%= json.username %></a> » 编辑个人资料</p>
+				</div>
+				
+				<form class="form-signin" role="form" method="post" enctype='multipart/form-data'>
+					<div class="profile-module clearfix">
+						<h5>头像</h5>
+						<div class="profile-module-desc">
+							<div class="avatar-preview pull-left"><img src="<%= json.gravatar %>?s=100" width="100" alt="<%= json.username %>"></div>
+							<div class="form-group pull-left">
+					      <label for="inputfile" >选择头像</label>
+					      <input type="file" id="inputfile" name="inputfile">
+					      <p class="help-block">支持 JPG、PNG 格式，不要超过 2M 。</p>
+					    </div>
+						</div>
+					</div>
+				</form>
+				<form method="post" class='profile-form' action="/people/updateUserInfos">
+					<input type="hidden" name="gravatar" id="avatar-edited" value='<%= json.gravatar %>'>
+					<div class="profile-module clearfix">
+						<h5>性别</h5>
+						<div class="profile-module-desc profile-gender">
+							<label><input type="radio" checked="" name="sex" value="1" id="zm-profile-edit-male"> 男</label>
+							<label><input type="radio" name="sex" value="0" id="zm-profile-edit-female"> 女</label>
+						</div>
+					</div>
+					<div class="profile-module clearfix">
+						<h5>居住地</h5>
+						<div class="profile-module-desc profile-location">
+							<% if(json.location) {%>
+								<input type="text" autocomplete="off" class="form-control " name="location" id="" value="<%= json.location %>" >
+							<% }else {%>
+								<input type="text" autocomplete="off" class="form-control " name="location" id="" placeholder="添加居住地">
+							<% } %>
+						</div>
+					</div>
+					<div class="profile-module clearfix">
+						<h5>个人简介</h5>
+						<div class="profile-module-desc profile-description">
+							<% if(json.intro) {%>
+								<input type="text" autocomplete="off" class="form-control " name="intro" id="" value="<%= json.intro %>">
+							<% }else {%>
+								<input type="text" autocomplete="off" class="form-control " name="intro" id="" placeholder="用一段话介绍你自己，会在你的个人页面显示">
+							<% } %>
+							
+						</div>
+					</div>
+					<div class="profile-module clearfix">
+						<h5></h5>
+						<div class="profile-module-desc">
+							<input type="submit" class="btn btn-save btn-primary" value="保存设置">
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="avatar-edit-layort">
+		<div class="avatar-edit-box">
+			<img id="avatar-Jcrop" src=""  >
+			<div class="clearfix crop-mate">
+				<input type="submit" class="btn btn-crop btn-primary  pull-right" value="确定">
+				<a href="#" class="cance-crop pull-right">取消</a>
+			</div>
+		</div>
+	</div>
+	
+	<script>
+		$(function(){
+			$('#inputfile').on('change', function(){
+				var files = !!this.files ? this.files : [];
+		    if (!files.length || !window.FileReader) return;
+		    if (/^image/.test( files[0].type)){		//not support IE
+	        var reader = new FileReader();
+	        reader.readAsDataURL(files[0]);
+	        reader.onloadend = function(){
+	       		$('.avatar-edit-layort').show();
+	       		$('#avatar-Jcrop').attr('src', this.result);
+	       		$('#avatar-Jcrop').Jcrop({
+	       			boxWidth: 400,
+	       			aspectRatio: 100/100
+	       		}, function(){
+	       			jcrop_api = this;
+      				jcrop_api.animateTo([100, 100, 400, 400]);
+	       		});
+	        }
+		    }
+			})
+
+			$('.btn-crop').click(function(){
+				$.ajaxFileUpload({
+					url:'/fileUpload',
+					secureuri:false,
+					fileElementId: 'inputfile',
+					dataType: 'json',
+					success: function(data, status){
+						if(status == 'success'){
+							$('.avatar-edit-layort').hide();
+							$('.avatar-preview img').attr('src', data.imgurl)
+							$('#avatar-edited').val(data.imgurl)
+
+						}
+					},
+					error: function(data, status, err){
+						alert(err)
+					}
+				})
+				
+			})
+
+
+		});
+	</script>
+<% include footer %>
