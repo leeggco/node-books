@@ -6,7 +6,7 @@
       <h3 class="text-center ">热门榜</h3>
       <ul class="hots_list ">
         <% for(var i=0; i<json.length; i++) {%>
-          <li class="host_<%= i %>"><a title="<%= json[i].name %>" href="http://localhost:3000/detail/<%= json[i].bid %>"><img src="<%= json[i].image %>" width="150" alt=""></a></li>
+          <li class="host_<%= i %>"><a title="<%= json[i].name %>" href="/detail/<%= json[i].bid %>"><img src="<%= json[i].image %>" width="150" alt=""></a></li>
         <% } %>
       </ul>
       </div>
