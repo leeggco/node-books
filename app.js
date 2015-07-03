@@ -10,7 +10,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var User = require('./models/user');
-//var Book = require('./models/books');
 var dbUrl = 'mongodb://localhost/books';
 var app = express();
 
@@ -46,7 +45,6 @@ app.set('view engine', 'ejs');
 
 // pre handle user
 app.use(function(req, res, next) {
-  if(!req.session.user) req.session.user = 'guest';
   var _user = req.session.user;
   app.locals.user = _user;
   User.getAvatar(_user, function(err, data){

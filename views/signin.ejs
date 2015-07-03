@@ -1,9 +1,9 @@
 <% include header %>
 
-  <div class="row showSignup">
+  <div class="row showSignup" >
     <div class="col-md-6 col-md-offset-3">
         <h2 class="user-m">用户登录</h2>
-    	<form method="POST", action="/user/signin" class="form-horizontal">
+    	<form method="POST" id="signinForm" action="/user/signin" class="form-horizontal">
             <div class="form-group">
                 <div class="form-group">
                     <label for="singupName" class="col-sm-3 control-label">用户名</label>
@@ -23,6 +23,5 @@
     	</form>
     </div>
   </div>
-
 
 <% include footer %>

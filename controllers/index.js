@@ -5,7 +5,6 @@ var Category = require('../models/category')
 exports.index = function(req, res){
   Book.find({}, function(err, obj){
   	Category.find({}, function(err, data){
-  		
   		res.render('', {
   		 	title: '首页 | 天天书屋',
   		  current:'home', json: obj,

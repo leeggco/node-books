@@ -10,18 +10,19 @@ var userSchema = new Schema({
 	password: String, 																		//密码
 	nickname: String, 																		//昵称
 	email: String,    																		//邮箱
-	intro: String,		 																		//简介
-	sex: String,																					//性别
-	location: String,																			//地区
+	intro: String,		 																	//简介
+	sex: String,																			//性别
+	location: String,																		//地区
 	gravatar: String, 																		//头像
 	devote: String,   																		//贡献分数
-	role: {type: Number,default: 0},											//权限级别
+	role: {type: Number,default: 0},														//权限级别
+	topics: [{type: objectId, ref: 'Community'}], 					//我的主题
 	down_list: [{type: objectId, ref: 'Books'}], 					//下载列表
 	pv_list: [{type: objectId, ref: 'Books'}],   					//浏览列表
-	devote_list: [{type: objectId, ref: 'Books'}], 				//上传列表
+	devote_list: [{type: objectId, ref: 'Books'}], 					//上传列表
 	devote_count: { type: Number, default: 0 },						//上传数量
-	createTime: { type: Date, default: Date.now }, 				//创建时间
-	updateTime: { type: Date, default: Date.now }, 				//更新时间
+	createTime: { type: Date, default: Date.now }, 					//创建时间
+	updateTime: { type: Date, default: Date.now }, 					//更新时间
 	visitors: [{
     user: {
       uid: {type: objectId, ref: 'Users'},

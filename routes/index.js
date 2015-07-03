@@ -4,9 +4,13 @@ var Index = require('../controllers/index')
 var Book = require('../controllers/book')
 var User = require('../controllers/user')
 var Comment = require('../controllers/comment')
+var Community = require('../controllers/community')
 
 // Index
 router.get('', Index.index)
+
+// Community
+router.get('/community', Community.index)
 
 // Book
 router.get('/book/new', User.singinRequired, Book.new)

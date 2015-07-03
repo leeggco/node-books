@@ -112,3 +112,16 @@
 .crop-mate {margin-top: 10px;}
 .detail-top {position:relative;}
 .average-wrap {position:absolute; right:50px; top:15px; }
+.form-group label.error { color:#f04848; font-weight:500; font-size:12px;}
+.form-group input.error { border:1px solid #FF7474;}
+.form-pr {position:relative;}
+#addform label.error {position:absolute; right:-40px; top:10px}
+
+
+
+
+
+
+
+
+
