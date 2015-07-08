@@ -5,7 +5,8 @@ var autoIncrement = require('mongoose-auto-increment');   //自增ID 模块
     autoIncrement.initialize(mongoose.connection);        //初始化
     
 var CommentSchema = new Schema({
-  book : [{type: objectId, ref: "Books"}],
+  book : {type: objectId, ref: "Books"},
+  issue : {type: objectId, ref: "Community"},
   from : [{type: objectId, ref: "Users"}],
   reply : [{
     from : {type: objectId, ref: "Users"},
@@ -31,7 +32,7 @@ CommentSchema.pre('save', function(next){
   } else{
     this.update_time = Date.now()
   }
-
+	
   next()
 })
 

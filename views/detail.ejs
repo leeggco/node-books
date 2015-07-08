@@ -97,7 +97,7 @@
               </div>
             </div>
           <% } %>
-          <form method="POST" action="/user/comment">
+          <form method="POST" action="/user/comment" id="replyForm" class="replyForm">
             <input type="hidden" name="book" value="<%= json._id %>">
             <input type="hidden" name="bid" value="<%= json.bid %>">
             <input type="hidden" name="to" value="<%= json.bid %>">

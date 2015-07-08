@@ -5,18 +5,14 @@ var autoIncrement = require('mongoose-auto-increment');   //自增ID 模块
     autoIncrement.initialize(mongoose.connection);        //初始化
 	
 var CommunitySchema = new Schema({
-	topic: String,
-	pv: { type: Number, default: 0 },
+	title: String,
 	content: String,
- 	from : [{type: objectId, ref: "Users"}],
-	reply : [{
-		from : {type: objectId, ref: "Users"},
-		to : {type: objectId, ref: "Users"},
-		create_time : { type: Date, default: Date.now }, 
-		content : String
-	}],
+	pv: { type: Number, default: 0 },
+	reply_count: { type: Number, default: 0 },
 	create_time : { type: Date, default: Date.now },        //创建时间
 	update_time : { type: Date, default: Date.now },        //更新时间
+	from : [{type: objectId, ref: "Users"}],
+	reply : [{type: objectId, ref: "Comment"}]
 })
 
 CommunitySchema.plugin(autoIncrement.plugin, {
@@ -26,7 +22,18 @@ CommunitySchema.plugin(autoIncrement.plugin, {
   incrementBy: 1
 });
 
+CommunitySchema.pre('save', function(next) {
+  if (this.isNew) {
+    this.create_time = this.update_time = Date.now()
+  }
+  else {
+    this.update_time = Date.now()
+  }
 
+  next()
+})
+
+module.exports = CommunitySchema
 
 
 

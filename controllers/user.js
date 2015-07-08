@@ -123,7 +123,6 @@ exports.userCenter = function(req, res){
       visitors = data
   })
 
-
   User
     .findOne({username: username})
     .populate({
@@ -208,7 +207,6 @@ exports.dedicate = function(req, res){
 
 exports.signup = function(req, res){
 	var _user = req.body
-			console.log(_user);
   User.findOne({username: _user.username}, function(err, data){
   	if(err){
   		console.log(err)
@@ -219,13 +217,10 @@ exports.signup = function(req, res){
   	else{
   		user = new User(_user)
   		user.gravatar = 'http://cn.gravatar.com/avatar/' + User.beMD5(user.email)
-  		console.log('xxxx' + user);
-  		console.log('xxxx' + user.email);
   		user.save(function(err, data){
   			if(err){
   				console.log(err)
   			}
-  			console.log(data);
   			res.redirect('/signin')
   		})
   	}
@@ -236,8 +231,7 @@ exports.signin = function(req, res){
   var _user = req.body
   var username = _user.username
   var password = _user.password
-  console.log(username)
-  console.log(password)
+
   User.findOne({username: username}, function(err, data){
   	if(err){
   		console.log(err)
@@ -246,15 +240,13 @@ exports.signin = function(req, res){
       return res.redirect('/signup')
     }
   	else{
-  		console.log(data);
 	    data.comparePassword(password, data.password, function(err, isMatch) {
 	      if (err) {
 	        console.log(err)
 	      }
-        console.log('来到这里吗？');
 	      if (isMatch) {
 	        req.session.user = data.username;
-	        console.log('恭喜登录成功了！')
+	        console.log('登录成功！')
 	        return res.redirect('/')
 	      }
 	      else {

@@ -237,6 +237,7 @@ exports.detail = function(req, res){
 				.find({book: book._id})
 				.populate('from')
 				.populate('reply.from reply.to', 'username gravatar')
+				.sort({'create_time': -1})
 				.exec(function(err, comments){
 					Category
 						.findOne({_id: book.category[0]._id})
@@ -341,7 +342,6 @@ exports.save = function(req, res){
 						if(err){
 							console.log(err)
 						}
-						console.log(book)
 						
 						User.update({username: _user }, {$inc: {devote_count: 10}, $push: {devote_list: book._id}}, function(err, data){
 							if(err){

@@ -1,0 +1,92 @@
+<% include header %>
+
+	<div class="row community issuepage">
+		<div class="col-md-8">
+			<div class="ishead">
+				<h3><%= json.title %></h3>
+				<p class="mate">
+					<a href="u/<%= json.from[0].username %>" title="<%= json.from[0].username %>"><img src="<%= json.from[0].gravatar %>" class="gravatar" width="20" /> <%= json.from[0].username %> </a>
+					- <span class="time"><%= moment(json.create_time).format('YYYY-MM-DD HH:mm') %></span>
+				</p>
+			</div>
+			<div class="iscontent">
+				<%- json.content %>
+			</div>
+			
+			<div class="col-md-12 comment-wrap " id="comment">
+				<h4 class="mt">评论</h4>
+				<% for(var i = 0; i < comments.length; i++) {%>
+					<div class="comment-box">
+						<span class="comment-float pull-right"><%= i+1 %>F</span>
+						<a href="/u/<%= comments[i].from[0].username %>" class="link-avatar pull-left"><img src="<%= comments[i].from[0].gravatar %>" class="gravatar" width="32" height="32" alt="<%= comments[i].from[0].username %>"></a>
+						<div class="item-content-wrap">
+							<div class="item-content">
+								<div class="item-content-hd"><a href="/u/<%= comments[i].from[0].username %>" id="" title="<%= comments[i].from[0].username %>"><%= comments[i].from[0].username %></a></div>
+								<div class="item-content"><%= comments[i].content %></div>
+								<div class="item-content-ft">
+									<span class="date"><%= moment(comments[i].create_time).format('YYYY-MM-DD HH:mm') %></span>
+									<a href="javacript:;" class="reply" data-cid="<%= comments[i]._id %>" data-uid="<%= comments[i].from[0]._id %>" data-user="<%= user %>">回复</a>
+									<div class="reply-box row">
+										<div class="col-sm-11 text-box">
+										 <input type="text" class="form-control reply-text" >
+										</div>
+										<div class="col-sm-1 btn-box">
+											<button type="button" class="btn btn-primary reply-btn">回复</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<% if(comments[i].reply){ %>
+									<% for(var j = 0; j < comments[i].reply.length; j++) {%>
+										<div class="comment-box">
+											<a href="/u/<%= comments[i].reply[j].from.username %>" class="link-avatar pull-left"><img src="<%= comments[i].reply[j].from.gravatar %>" class="gravatar" width="32" height="32" alt="<%= comments[i].reply[j].from.username %>"></a>
+											<div class="item-content-wrap">
+												<div class="item-content">
+													<div class="item-content-hd"><a href="/u/<%= comments[i].reply[j].from.username %>" id="" title="<%= comments[i].reply[j].from.username %>"><%= comments[i].reply[j].from.username %></a><span class="whosreply"> 回复 </span><a href="/u/<%= comments[i].reply[j].to.username %>" id="" title="<%= comments[i].reply[j].to.username %>"><%= comments[i].reply[j].to.username %></a></div>
+													<div class="item-content"><%= comments[i].reply[j].content %></div>
+													<div class="item-content-ft">
+														<span class="date"><%= moment(comments[i].reply[j].create_time).format('YYYY-MM-DD HH:mm') %></span>
+														<a href="javacript:;" class="reply" data-cid="<%= comments[i]._id %>" data-uid="<%= comments[i].reply[j].from._id %>" data-user="<%= user %>">回复</a>
+														<div class="reply-box row">
+															<div class="col-sm-11 text-box">
+															 <input type="text" class="form-control reply-text" >
+															</div>
+															<div class="col-sm-1 btn-box">
+																<button type="button" class="btn btn-primary reply-btn">回复</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									<% } %>
+								<% } %>
+						</div>
+					</div>
+				<% } %>
+				<form method="POST" action="/issue_comment" id="replyForm" class="replyForm">
+					<input type="hidden" name="issue" value="<%= json._id %>">
+					<input type="hidden" name="cmid" value="<%= json.cmid %>">
+					<input type="hidden" name="to" value="<%= json.cmid %>">
+					<% if(user) { %>
+						<input type="hidden" name="from" value="<%= user %>">
+					<% } %>
+					<textarea name="content" rows="3"  class="form-control"></textarea>
+					<% if(user) { %>
+						<div class="mate pull-left">
+							<a href="/u/<%= user %>" title="<%= user %>"><img src="<%= gravatar %>?s=32" class="gravatar" width="32" height="32" alt=""></a><span class="username"> signed as</span><a href="/u/<%= user %>" title="<%= user %>"> <span><%= user %></span></a>
+						</div>
+						<input type="submit" class="btn btn-primary pull-right" value="提交">
+					<% } else { %>
+						<a href="/signup">登陆后评论</a>
+					<% } %>
+				</form>  
+			</div>
+		</div>
+	
+		<div class="col-md-4 slide-rd slide-rd2 user-visitor">
+
+		</div>
+	</div>
+  
+<% include footer %>

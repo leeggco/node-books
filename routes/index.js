@@ -11,6 +11,8 @@ router.get('', Index.index)
 
 // Community
 router.get('/community', Community.index)
+router.get('/community/:cmid', Community.issuePage)
+router.post('/newIssue', User.singinRequired, Community.newIssue)
 
 // Book
 router.get('/book/new', User.singinRequired, Book.new)
@@ -20,7 +22,7 @@ router.get('/detail/:bid', Book.detail)
 router.get('/newbooks', Book.newbooks)
 router.get('/category/:name', Book.category)
 router.get('/s', Book.search)
-router.post('/ajax_tothx', User.singinRequired, Book.tothx)
+router.post('/tothx', User.singinRequired, Book.tothx)
 router.post('/record_download', Book.recordDownload)
 
 // User
@@ -38,5 +40,9 @@ router.post('/fileUpload', User.singinRequired, User.fileUpload)
 // Comment
 router.post('/user/comment', User.singinRequired, Comment.save)
 router.post('/set_comment', User.singinRequired, Comment.save)
+router.post('/issue_comment', User.singinRequired, Comment.isSave)
+router.get('/issue_operate', User.singinRequired, Comment.isOperate)
 
 module.exports = router;
+
+

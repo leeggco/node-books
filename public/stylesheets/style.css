@@ -15,7 +15,7 @@
 .new-headh2 {margin-bottom: 20px; margin-left: 200px;}
 .btn-save {padding:0 20px; margin-left: 130px;}
 .coverPic {box-shadow: 1px 1px 20px #999; border-radius: 2px;}
-.des-box .elp {text-indent:2em; font-size:14px; line-height:170%; color:#444;}
+.elp {text-indent:2em; font-size:14px; line-height:170%; color:#444;}
 .hots_list {height:160px; margin-top: 70px; position:relative;}
 .hots_list li {bottom:0; list-style-type: none; box-shadow: 1px 1px 20px #999; position:absolute; }
 .hots_list .host_2 img, .hots_list .host_4 img {width:140px;}
@@ -116,12 +116,34 @@
 .form-group input.error { border:1px solid #FF7474;}
 .form-pr {position:relative;}
 #addform label.error {position:absolute; right:-40px; top:10px}
-
-
-
-
-
-
-
+.cm-head {margin-top:15px;}
+.subnav-item {position: relative;float: left;padding: 7px 14px;font-weight: bold; color: #666;border: 1px solid #e5e5e5;}
+.subnav-item:first-child {border-top-left-radius: 3px;border-bottom-left-radius: 3px;}
+.subnav-item:last-child {border-top-right-radius: 3px;border-bottom-right-radius: 3px;}
+.subnav-item+.subnav-item {margin-left: -1px;}
+.subnav-item.selected {color: #fff;background-color: #4078c0;border-color: #4078c0; cursor:default}
+.subnav-item.selected:hover {text-decoration:none;}
+.cm-subnav {margin-top:20px; }
+.new-issue {border-top: 1px solid #ddd; padding-top:20px; margin-top:20px; display:none;}
+.issue-title {margin-bottom:10px;}
+.new-issue-right .issue-content {height:250px;}
+.new-issue-form .submitIssue {margin-top:10px;}
+.issue-list-wrap {border-top: 1px solid #ddd; margin-top:20px;}
+.issue-list .issue-item {list-style-type:none; position:relative; padding-left:60px; font-size:12px; border-bottom:1px solid #eee; padding-bottom:12px;}
+.issue-list {padding-left:0;}
+.issue-list .avatar-wrap {position:absolute; left:0px; top:0px;}
+.issue-list .issue-item h3 {font-size:13px; font-weight:bold;}
+.issue-list .total-repair {color:#999}
+.issue-list .mate {color:#999}
+.issue-list .operate {position:absolute; right:10px; top:0px; display:none;}
+.issues-search {margin-right:-15px;}
+.new-issue label.error { color:#f04848; font-weight:500; font-size:12px;}
+.new-issue input.error { border:1px solid #FF7474; margin-bottom:0px;}
+.issuepage .mate {font-size:12px; color:#999}
+.iscontent {min-height:300px; padding-left:15px; margin-top:15px; margin-bottom:15px;}
+.issuepage .ishead { padding-left:15px; border-bottom: 1px solid #eee;}
+.summary  {font-size:14px; color:#444; line-height:160%;}
+.reply-box input.error { border:1px solid #FF7474;}
+.replyForm label.error { color:#f04848; font-weight:500; font-size:12px;}
 
 

@@ -1,5 +1,5 @@
 jQuery.extend(jQuery.validator.messages, {
-    required: "不能为空",
+  required: "内容不能为空",
 	remote: "请修正该字段",
 	email: "请输入正确格式的电子邮件",
 	url: "请输入合法的网址",
@@ -10,12 +10,12 @@ jQuery.extend(jQuery.validator.messages, {
 	creditcard: "请输入合法的信用卡号",
 	equalTo: "请再次输入相同的值",
 	accept: "请输入拥有合法后缀名的字符串",
-	maxlength: jQuery.validator.format("请输入一个长度最多是{0}的字符串"),
-	minlength: jQuery.validator.format("请输入一个长度最少是{0}的字符串"),
-	rangelength: jQuery.validator.format("请输入 一个长度介于{0} 和 {1}之间的字符串"),
-	range: jQuery.validator.format("请输入一个介于 {0} 和 {1} 之间的值"),
-	max: jQuery.validator.format("请输入一个最大为{0} 的值"),
-	min: jQuery.validator.format("请输入一个最小为{0} 的值")
+	maxlength: jQuery.validator.format("长度最多{0}个字哦"),
+	minlength: jQuery.validator.format("长度最少是{0}个字哦"),
+	rangelength: jQuery.validator.format("长度需介于{0} 和 {1} "),
+	range: jQuery.validator.format("长度需介于 {0} 和 {1} 之间的值"),
+	max: jQuery.validator.format("长度需大为{0} 的值"),
+	min: jQuery.validator.format("长度需最小为{0} 的值")
 });
 
 $(function(){
@@ -92,3 +92,27 @@ $("#addform").validate({
 		}                    
 	}
 });
+
+$('#issueForm').validate({
+	rules:{
+		title: {
+			required:true,
+			minlength:5
+		},
+		content: {
+			required:true,
+			minlength:2
+		}
+	}
+});
+
+$('#replyForm').validate({
+	rules:{
+		content: {
+			required:true,
+		}
+	}
+});
+
+
+
