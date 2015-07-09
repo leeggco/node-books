@@ -1,6 +1,7 @@
 var mongoose = require('mongoose')
 var User = require('../models/user') 
 var moment = require('moment')
+var _ = require('underscore')
 var Comment = require('../models/comment')
 var Community = require('../models/community')
 
@@ -21,7 +22,7 @@ exports.index = function(req, res){
 				}
 			}
 			//data = data.content.toSting().substring(0, random)
-			console.log(data)
+			console.log(data);
 			res.render('community', {title:'社区 | 天天书屋', current:'community', json: data, moment: moment})
 		})
 }
@@ -42,8 +43,9 @@ exports.issuePage = function(req, res){
 				.populate('reply.from reply.to username gravatar uid')
 				.sort({'create_time': -1})
 				.exec(function(err, comments){
-					console.log(data)
-					console.log(comments)
+					Community.update({'_id': data._id}, {$inc: {'pv': 1}}, function(err, data){
+						if(err) console.log(err)
+					})
 					data.content = '<p class="elp">' + data.content.replace(/\n/img, '</p><p class="elp">') + '</p>';
 					res.render('issue', {
 						title: data.title +  ' | 天天书屋', 
@@ -58,25 +60,47 @@ exports.issuePage = function(req, res){
 
 exports.newIssue = function(req, res){
 	var issue = req.body
+	var id = issue.is_id
 	var _user = req.session.user
-	User.findOne({'username': _user}, function(err, user){
-		var _uid = user._id
-		var _issue = new Community(issue)
-		_issue.from = user._id
-		_issue.save(function(err, data){
-			if(err){
-				console.log(err)
-			}else {
-				User.update({'_id': user._id}, {$push: {'topics': data._id}}, function(err, updated){
-					if(err){
-						console.log(err)
-					}else{
-						res.redirect('/community/'+ data.cmid)
-					}
-				})
-			}
+	var sources = {title: issue.title, content: issue.content}
+	
+	if(id){
+		Community.findById(id, function(err, data){
+			if (err) {
+        console.log(err)
+      }
+
+      _issue = _.extend(data, sources)
+			console.log(_issue);
+      _issue.save(function(err, data){
+      	if (err) {
+          console.log(err)
+        }
+        console.log(data);
+        res.redirect('/community/'+ data.cmid)
+      })
 		})
-	})
+	}else {
+		User.findOne({'username': _user}, function(err, user){
+			var _uid = user._id
+			var _issue = new Community(issue)
+			_issue.from = user._id
+			_issue.save(function(err, data){
+				if(err){
+					console.log(err)
+				}else {
+					User.update({'_id': user._id}, {$push: {'topics': data._id}}, function(err, updated){
+						if(err){
+							console.log(err)
+						}else{
+							res.redirect('/community/'+ data.cmid)
+						}
+					})
+				}
+			})
+		})
+	}
+
 }
 
 

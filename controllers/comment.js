@@ -18,7 +18,6 @@ exports.save = function(req, res){
 					content: _comment.content
 				}
 				comment.reply.push(reply)
-				console.log(comment)
 				comment.save(function(err, comment){
 					if(err){
 						console.log(err)
@@ -48,7 +47,8 @@ exports.isSave = function(req, res){
 	var _cid = _comment.cid
 	var _cmid = _comment.cmid
 	var _user = _comment.from
-	console.log(_comment)
+	var is_id = _comment.is_id
+
 	if(_cid){
 		User.findOne({username: _user}, function(err, user){
 			Comment.findOne({_id: _cid}, function(err, comment){
@@ -58,7 +58,12 @@ exports.isSave = function(req, res){
 					content: _comment.content
 				}
 				comment.reply.push(reply)
-				console.log(comment)
+				Community.update({'_id': is_id}, {$inc: {'reply_count': 1}}, function(err, cb){
+					if(err){
+						console.log(err)
+					}
+				})
+				
 				comment.save(function(err, comment){
 					if(err){
 						console.log(err)
@@ -75,7 +80,7 @@ exports.isSave = function(req, res){
 				if(err){
 					console.log(err)
 				}
-				Community.update({'_id': _comment.issue}, {$push: {'reply': comment._id}}, function(err, data){
+				Community.update({'_id': _comment.issue}, {$push: {'reply': comment._id}, $inc: {'reply_count': 1}}, function(err, data){
 					if(err){
 						console.log(err)
 					}else {

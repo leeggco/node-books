@@ -46,11 +46,18 @@ $(document).ready(function(){
 
   $('.item-content-wrap .item-content').hover(function(){
   	$(this).find('.reply').toggle()
+  	$(this).find('.unlogin').toggle()
   });
 
   $('.item-content-ft .reply').click(function(){
   	$('.reply-box').hide();
   	$(this).next('.reply-box').toggle();
+  });
+	
+	$('.item-content-ft .unlogin').click(function(){
+		$(this).parent().find('.error').remove();
+  	$(this).before('<span class="error">请先登录，再回复</span>')
+		$(this).parent().find('.error').delay(2000).fadeOut(300);
   });
 	
   $('.reply-box .reply-btn').click(function(){
@@ -59,14 +66,23 @@ $(document).ready(function(){
   	var cid = data.attr('data-cid');
   	var to = data.attr('data-uid');
   	var from = data.attr('data-user');
-			
+  	var is_id = $('#is_id').val();
+		var href = window.location.href;
+		var url = '';
+		
+		if(href.indexOf('detail') > -1){
+			url = '/set_comment';
+		}else if(href.indexOf('community') > -1){
+			url = '/issue_comment';
+		}
+		
 		if(txt == ''){
 			$(this).parent().prev().find('.reply-text').attr('placeholder', '请输入内容').addClass('error')
 		}else {
 			$.ajax({
 				type: 'post',
-				url: '/set_comment',
-				data: {'cid':cid, 'from':from, 'to': to, 'content' : txt},
+				url: url,
+				data: {'cid':cid, 'from':from, 'to': to, 'content' : txt, 'is_id': is_id},
 				success: function(data){
 					if(data.msg === 'success'){
 						window.location.reload();
@@ -95,11 +111,19 @@ $(document).ready(function(){
   })
 	
   $('.issues-search .btn-success').click(function(){
-		$('.new-issue').slideToggle(200);
+		$('.new-issue').slideDown(200);
+	})
+  $('#issueForm .btn-cancel').click(function(){
+		$('.new-issue').slideUp(200);
+		$('#issueForm .issue-title').val('');
+		$('#issueForm .issue-content').val('');
+	})
+	
+	$('.issues-search .btn-cance').click(function(){
+		$('.new-issue').slideDown(200);
 	})
 	
 	$('.issue-list li').hover(function(event){
-		console.log(event)
 		$(this).find('.operate').toggle();
 	})
 	
@@ -112,17 +136,19 @@ $(document).ready(function(){
 			data: {'cmid': cmid, 'handle': 'edit'},
 			success: function(data){
 				if(data.status === 'success'){
-					var cmid = data.msg.cmid;
+					var is_id = data.msg._id;
 					var title = data.msg.title;
 					var content = data.msg.content;
-					$('#issueForm').append('<input type="hidden" name="cmid" value="'+cmid+'" />');
+					var formscroll = $('.cm-subnav').offset().top + 60;
+					$('#issueForm').append('<input type="hidden" name="is_id" value="'+is_id+'" />');
+					$('#issueForm .submitIssue').val('更新');
 					$('#newIssue .issue-title').val(title)
 					$('#newIssue .issue-content').val(content)
 					$('#newIssue').slideDown(200);
+					$('body').animate({ scrollTop: formscroll + 'px' }, 200);
 				}
 			}
 		})
 	})
-	
 	
 });

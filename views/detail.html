@@ -1,0 +1,157 @@
+<% include header.html %>
+
+  <div class="row detail-top"><!--书籍简介-->
+    <div class="col-md-8 ">
+      
+      <div class=" average-wrap"> 
+      <% if(json.average > 0){ %>
+        <div class="average-box clearfix" title="豆瓣评分：<%= json.average %>分"><span class="average-count text-danger pull-right"><%= json.average %></span><img class="pull-right" src="http://img3.douban.com/pics/douban-icons/favicon_24x24.png" alt=""></div>
+      <% }%>
+        <% if(json.from[0]){ %>
+          <div class="dedicate-user text-center">
+            <p>贡献者</p>
+            <p class=""><a href="/u/<%= json.from[0].username %>"><img src="<%= json.from[0].gravatar %>?s=48" alt="" width="48" height="48" class="gravatar"></a></p>  
+            <p><a href="/u/<%= json.from[0].username %>"><%= json.from[0].username %></a></p>
+            <p class="tothx">
+              <% if(thxed) {%>
+              <span class="icon iconActived" data-from="<%= user %>" data-bid="<%= json._id%>" title="感谢"></span>
+              <% }else { %>
+                <span class="icon " <% if(user) {%> id="toThx" <%}%> data-from="<%= user %>" data-bid="<%= json._id%>" title="感谢"></span>
+              <% } %>
+            </p>
+          </div>
+        <% }%>
+      </div>
+     
+      <div class="clearfix">
+        <div class="col-md-3">
+          <div class="bookCover">
+            <img src="<%= json.image %>" width="180" alt="" class="coverPic">
+          </div>
+        </div>
+        <div class="col-md-7 inctro">
+          <h3 class="book-name"><%= json.name %></h3>
+          <p><strong>作者：</strong> <%= json.author %></p>
+          <p><strong>出版日期：</strong> <%= json.press_time %></p>
+          <p><strong>页数：</strong> <%= json.page %> </p>
+          <p><strong>ISBN：</strong> <%= json.isbn %> </p>
+          <p><strong>分类：</strong><a href="/category/<%= category %>"> <%= category %></a></p>
+          <p><strong>下载地址：</strong> <%- json.sky_drive %></p>
+        </div>
+      </div>
+
+      <div class="des-box">
+        <div class="col-md-12">
+          <h4 class="mt">内容简介</h4>
+          <div class="description"><%- json.description %></div>
+        </div>
+
+        <div class="col-md-12 comment-wrap " id="comment">
+          <h4 class="mt">评论</h4>
+          <% for(var i = 0; i < comments.length; i++) {%>
+            <div class="comment-box">
+              <span class="comment-float pull-right"><%= i+1 %>F</span>
+              <a href="/u/<%= comments[i].from[0].username %>" class="link-avatar pull-left"><img src="<%= comments[i].from[0].gravatar %>" class="gravatar" width="32" height="32" alt="<%= comments[i].from[0].username %>"></a>
+              <div class="item-content-wrap">
+                <div class="item-content">
+                  <div class="item-content-hd"><a href="/u/<%= comments[i].from[0].username %>" id="" title="<%= comments[i].from[0].username %>"><%= comments[i].from[0].username %></a></div>
+                  <div class="item-content"><%= comments[i].content %></div>
+                  <div class="item-content-ft">
+                    <span class="date"><%= moment(comments[i].create_time).format('YYYY-MM-DD HH:mm') %></span>
+                    <a href="javacript:;" class="<% if(user) {%> reply <% }else {%> unlogin <% } %>" data-cid="<%= comments[i]._id %>" data-uid="<%= comments[i].from[0]._id %>" data-user="<%= user %>">回复</a>
+                    <div class="reply-box row">
+                      <div class="col-sm-11 text-box">
+                       <input type="text" class="form-control reply-text" >
+                      </div>
+                      <div class="col-sm-1 btn-box">
+                        <button type="button" class="btn btn-primary reply-btn">回复</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <% if(comments[i].reply){ %>
+                    <% for(var j = 0; j < comments[i].reply.length; j++) {%>
+                      <div class="comment-box">
+                        <a href="/u/<%= comments[i].reply[j].from.username %>" class="link-avatar pull-left"><img src="<%= comments[i].reply[j].from.gravatar %>" class="gravatar" width="32" height="32" alt="<%= comments[i].reply[j].from.username %>"></a>
+                        <div class="item-content-wrap">
+                          <div class="item-content">
+                            <div class="item-content-hd"><a href="/u/<%= comments[i].reply[j].from.username %>" id="" title="<%= comments[i].reply[j].from.username %>"><%= comments[i].reply[j].from.username %></a><span class="whosreply"> 回复 </span><a href="/u/<%= comments[i].reply[j].to.username %>" id="" title="<%= comments[i].reply[j].to.username %>"><%= comments[i].reply[j].to.username %></a></div>
+                            <div class="item-content"><%= comments[i].reply[j].content %></div>
+                            <div class="item-content-ft">
+                              <span class="date"><%= moment(comments[i].reply[j].create_time).format('YYYY-MM-DD HH:mm') %></span>
+                              <a href="javacript:;" class="<% if(user) {%> reply <% }else {%> unlogin <% } %>" data-cid="<%= comments[i]._id %>" data-uid="<%= comments[i].reply[j].from._id %>" data-user="<%= user %>">回复</a>
+														
+                              <div class="reply-box row">
+                                <div class="col-sm-11 text-box">
+                                 <input type="text" class="form-control reply-text" >
+                                </div>
+                                <div class="col-sm-1 btn-box">
+                                  <button type="button" class="btn btn-primary reply-btn">回复</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    <% } %>
+                  <% } %>
+              </div>
+            </div>
+          <% } %>
+          <form method="POST" action="/user/comment" id="replyForm" class="replyForm">
+            <input type="hidden" name="book" value="<%= json._id %>">
+            <input type="hidden" name="bid" value="<%= json.bid %>">
+            <input type="hidden" name="to" value="<%= json.bid %>">
+            <% if(user) { %>
+              <input type="hidden" name="from" value="<%= user %>">
+            <% } %>
+            <textarea name="content" rows="3"  class="form-control"></textarea>
+            <% if(user) { %>
+              <div class="mate pull-left">
+                <a href="/u/<%= user %>" title="<%= user %>"><img src="<%= gravatar %>?s=32" class="gravatar" width="32" height="32" alt=""></a><span class="username"> signed as</span><a href="/u/<%= user %>" title="<%= user %>"> <span><%= user %></span></a>
+              </div>
+              <input type="submit" class="btn btn-primary pull-right" value="提交">
+            <% } else { %>
+              <a href="/signup">登陆后评论</a>
+            <% } %>
+          </form>  
+        </div>
+      </div>
+
+    </div>
+    <% if(books.books.length > 1){ %>
+    <div class="col-md-4 slide-rd">
+      <h4 class="recommendation">相关推荐</h4>
+      <% for(var i = 0; i < books.books.length; i++) {%>
+        <div class="rd-item clearfix">
+          <a href="/detail/<%= books.books[i].bid %>" title="<%= books.books[i].name %>" ><img class="pull-left coverPic " src="<%= books.books[i].image %>" width="80" alt="<%= books.books[i].name %>"></a>
+          <div class="mate">
+            <p class="rd-link">书名：<a href="/detail/<%= books.books[i].bid %>" ><%= books.books[i].name %></a></p>
+            <p class="rd-author">作者：<%= books.books[i].author %></p>
+            <p class="rd-category">分类：<%= books.name %></p>
+            <% if(books.books[i].average > 0) { %>
+              <p class="rd-average">评分：<img class="douban-icon" src="http://img3.douban.com/pics/douban-icons/favicon_16x16.png" alt=""> <%= books.books[i].average %></p>
+             <% } %>
+          </div>
+        </div>
+      <% } %>
+    </div>
+    <% } %>
+
+    <% if(visitors.length > 0){ %>
+    <div class="col-md-4 slide-rd slide-rd2">
+      <h4 class="recommendation">谁也来看过</h4>
+      <% for(var i = 0; i < visitors.length; i++) {%>
+        <div class="rd-item clearfix">
+          <a href="/u/<%= visitors[i].visitors.user.username %>" class="pull-left"><img src="<%= visitors[i].visitors.user.gravatar %>?s=48" class="gravatar" width="48" alt=""></a>
+          <div class="mate ">
+            <p class="username"><a href="/u/<%= visitors[i].visitors.user.username %>"><%= visitors[i].visitors.user.username %></a></p>
+            <p class="vtime date"><%= moment(visitors[i].visitors.at).format('YYYY-MM-DD HH:mm') %></p>
+          </div>
+        </div>
+      <% } %>
+    </div>
+    <% } %>
+  </div>
+
+<% include footer.html %>

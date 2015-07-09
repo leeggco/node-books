@@ -1,0 +1,94 @@
+<% include header.html %>
+<div class="row">
+    
+    <form id="addform" method="post" action="/book/save" class="form-horizontal">
+        <fieldset>
+
+            <h2 class="new-headh2">修改书籍</h2>
+            <div class="col-md-4">
+            <div class="form-group text-right">
+                <input class="form-control" type="hidden" name="average" id="average" value="0">
+                <input class="form-control" type="hidden" name="id" id="id" value="<%= data._id %>">
+                <div class="form-group">
+                    <label for="douban" class="col-sm-4 control-label">豆瓣采集</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" type="text" name="douban" id="douban" disabled />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="name" class="col-sm-4 control-label">书名</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" type="text" name="name" value="<%= data.name %>" id="name"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="author" class="col-sm-4 control-label">作者</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" type="text" value="<%= data.author %>" name="author" id="author"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="categoryName" class="col-sm-4 control-label">分类</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" type="text" name="categoryName" value="<%= data.category[0].name %>" id="categoryName"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="isbn" class="col-sm-4 control-label">ISBN</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" value="<%= data.isbn %>" type="text" name="isbn" id="isbn"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="page" class="col-sm-4 control-label">页数</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" value="<%= data.page %>" type="text" name="page" id="page"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="image" class="col-sm-4 control-label">封面</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" value="<%= data.image %>" type="text" name="image" id="image"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="press" class="col-sm-4 control-label">出版社</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" value="<%= data.press %>" type="text" name="press" id="press"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="press_time" class="col-sm-4 control-label">出版时间</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" type="text" value="<%= data.press_time %>" name="press_time" id="press_time"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="sky_drive" class="col-sm-4 control-label">网盘地址</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" value="<%= data.sky_drive %>" type="text" name="sky_drive" id="sky_drive"/>
+                    </div>
+                </div>
+               
+                <div class="form-group">
+                    <label for="url" class="col-sm-4 control-label">官网链接</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" type="text" value="<%= data.url %>" name="url" id="url"/>
+                    </div>
+                </div>
+                
+                
+            </div>
+            </div>
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="description" class="col-sm-2 control-label">内容简介</label><div class="col-sm-10"><textarea name="description" class="form-control book-inctor" id="description" cols="60" rows="5"><%= data.description %></textarea> </div>
+                </div>
+                <button id="c_save" type="submit" class="btn btn-save pull-left btn-primary">保存</button>
+            </div>
+        </fieldset>
+    </form>
+   
+
+</div>
+<% include footer.html %>

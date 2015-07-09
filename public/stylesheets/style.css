@@ -6,7 +6,7 @@
 .container {font-family: 'Microsoft Yahei','黑体'}
 .footer .tc {text-align: center}
 .add_item {margin-top: 10px;}
-.btn-primary {margin-top: 10px; margin-left: 75px;}
+/*.btn-primary {margin-top: 10px; margin-left: 75px;}*/
 .detail-top {margin-top: 30px;}
 .des-box {margin-top: 30px; line-height:170%; }
 .book-name {margin-top: 0;}
@@ -51,8 +51,8 @@
 .item-content-wrap {margin-left: 45px;}
 .item-content-ft { font-size: 12px}
 .item-content-ft .date { color:#999; }
-.item-content-ft .reply {display:none; color:#999; padding-left: 15px; margin-left: 10px; background: url(../images/sprites-1.9.2-03.png) no-repeat 0 -12px ;}
-.item-content-ft .reply:hover {color:#337ab7;  background: url(../images/sprites-1.9.2-03.png) no-repeat 0 1px ;}
+.item-content-ft .reply, .item-content-ft .unlogin  {display:none; color:#999; padding-left: 15px; margin-left: 10px; background: url(../images/sprites-1.9.2-03.png) no-repeat 0 -12px ;}
+.item-content-ft .reply:hover ,.item-content-ft .unlogin:hover {color:#337ab7;  background: url(../images/sprites-1.9.2-03.png) no-repeat 0 1px ;}
 .comment-box .gravatar {margin-top: 7px;}
 .item-content-wrap .whosreply { color:#999; }
 .reply-box .btn-primary {margin-top: 0; margin-left: 5px;}
@@ -127,7 +127,8 @@
 .new-issue {border-top: 1px solid #ddd; padding-top:20px; margin-top:20px; display:none;}
 .issue-title {margin-bottom:10px;}
 .new-issue-right .issue-content {height:250px;}
-.new-issue-form .submitIssue {margin-top:10px;}
+.new-issue-form .btn-mate {margin-top:10px; }
+.new-issue-form .submitIssue {margin-top:0px; margin-left:0px }
 .issue-list-wrap {border-top: 1px solid #ddd; margin-top:20px;}
 .issue-list .issue-item {list-style-type:none; position:relative; padding-left:60px; font-size:12px; border-bottom:1px solid #eee; padding-bottom:12px;}
 .issue-list {padding-left:0;}
@@ -145,5 +146,5 @@
 .summary  {font-size:14px; color:#444; line-height:160%;}
 .reply-box input.error { border:1px solid #FF7474;}
 .replyForm label.error { color:#f04848; font-weight:500; font-size:12px;}
-
+span.error { color:#f04848; padding-left:10px;}
 

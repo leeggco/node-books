@@ -1,5 +1,6 @@
 var express = require('express');
 var path = require('path');
+var ejs = require('ejs');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var mongoose = require('mongoose')
@@ -38,7 +39,8 @@ app.use(session({
 // view engine setup
 
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.engine('html', ejs.__express);
+app.set('view engine', 'html');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));

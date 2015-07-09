@@ -306,7 +306,6 @@ exports.save = function(req, res){
 	var categoryName = bookObj.categoryName
 	var upperCN = categoryName.toUpperCase()
 
-	console.log(bookObj)
 	if(id){	
 		Book.findById(id, function(err, book){
 			if (err) {
