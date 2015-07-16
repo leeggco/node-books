@@ -13,6 +13,7 @@ router.get('', Index.index)
 router.get('/community', Community.index)
 router.get('/community/:cmid', Community.issuePage)
 router.post('/newIssue', User.singinRequired, Community.newIssue)
+router.post('/issueDel', User.singinRequired, Community.issueDel)
 
 // Book
 router.get('/book/new', User.singinRequired, Book.new)
@@ -42,6 +43,7 @@ router.post('/user/comment', User.singinRequired, Comment.save)
 router.post('/set_comment', User.singinRequired, Comment.save)
 router.post('/issue_comment', User.singinRequired, Comment.isSave)
 router.get('/issue_operate', User.singinRequired, Comment.isOperate)
+router.post('/commentDel', User.singinRequired, Comment.commentDel)
 
 module.exports = router;
 

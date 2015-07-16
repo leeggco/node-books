@@ -18,6 +18,7 @@ var BookSchema = new Schema({
   press_time: String,                                    //出版时间
   url: String,                                           //官网链接
   average: { type: String, default: '0' },               //豆瓣评分
+  reply_count: { type: String, default: '0' },           //评论数
   create_time: { type: Date, default: Date.now },        //创建时间
   update_time: { type: Date, default: Date.now },        //更新时间
   pv: { type: Number, default: 0 },                      //浏览次数

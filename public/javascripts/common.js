@@ -1,4 +1,45 @@
 $(document).ready(function(){
+	
+	
+  $('.issues-search .btn-success').click(function(){
+		$('.new-issue').slideDown(200);
+	})
+  $('#issueForm .btn-cancel').click(function(){
+		$('.new-issue').slideUp(200);
+		$('#issueForm .issue-title').val('');
+		$('#issueForm .issue-content').val('');
+	})
+	
+	$('.issues-search .btn-cance').click(function(){
+		$('.new-issue').slideDown(200);
+	})
+	
+	$('.issue-list li').mouseenter(function(event){
+		$(this).find('.operate').show();
+	})
+	
+	$('.issue-list li').mouseleave(function(event){
+		$(this).find('.operate').hide();
+	})
+	
+  $('.item-content-wrap .item-content').hover(function(){
+  	$(this).find('.reply').toggle()
+  	$(this).find('.unlogin').toggle()
+  });
+
+  $('.item-content-ft .reply').click(function(){
+  	$('.reply-box').hide();
+  	$(this).next('.reply-box').toggle();
+  });
+	
+	$('.item-content-ft .unlogin').click(function(){
+		$(this).parent().find('.error').remove();
+  	$(this).before('<span class="error">请先登录，再回复</span>')
+		$(this).parent().find('.error').delay(2000).fadeOut(300);
+  });
+	
+	
+	//Ajax methods
 	$('#douban').blur(function(){
 		var id = $(this).val();
 		$.ajax({
@@ -44,27 +85,12 @@ $(document).ready(function(){
 		}, 300000)
 	});
 
-  $('.item-content-wrap .item-content').hover(function(){
-  	$(this).find('.reply').toggle()
-  	$(this).find('.unlogin').toggle()
-  });
-
-  $('.item-content-ft .reply').click(function(){
-  	$('.reply-box').hide();
-  	$(this).next('.reply-box').toggle();
-  });
-	
-	$('.item-content-ft .unlogin').click(function(){
-		$(this).parent().find('.error').remove();
-  	$(this).before('<span class="error">请先登录，再回复</span>')
-		$(this).parent().find('.error').delay(2000).fadeOut(300);
-  });
-	
   $('.reply-box .reply-btn').click(function(){
   	var data = $(this).parent().parent().prev('.reply');
   	var txt = $(this).parent().prev().find('.reply-text').val();
   	var cid = data.attr('data-cid');
   	var to = data.attr('data-uid');
+  	var bid = data.attr('data-bid');
   	var from = data.attr('data-user');
   	var is_id = $('#is_id').val();
 		var href = window.location.href;
@@ -79,10 +105,11 @@ $(document).ready(function(){
 		if(txt == ''){
 			$(this).parent().prev().find('.reply-text').attr('placeholder', '请输入内容').addClass('error')
 		}else {
+			
 			$.ajax({
 				type: 'post',
 				url: url,
-				data: {'cid':cid, 'from':from, 'to': to, 'content' : txt, 'is_id': is_id},
+				data: {'cid': cid, 'bid': bid, 'from': from, 'to': to, 'content' : txt, 'is_id': is_id},
 				success: function(data){
 					if(data.msg === 'success'){
 						window.location.reload();
@@ -102,30 +129,14 @@ $(document).ready(function(){
       url: '/tothx',
       data: {'from': from, 'bid': bid},
       success: function(data){
-        if(data.msg === 'success'){
+        if(data.status === 'success'){
           _this.unbind('click')
           _this.addClass('iconActived')
+					showResText(data.status, data.resTxt)
         }
       }
     })
   })
-	
-  $('.issues-search .btn-success').click(function(){
-		$('.new-issue').slideDown(200);
-	})
-  $('#issueForm .btn-cancel').click(function(){
-		$('.new-issue').slideUp(200);
-		$('#issueForm .issue-title').val('');
-		$('#issueForm .issue-content').val('');
-	})
-	
-	$('.issues-search .btn-cance').click(function(){
-		$('.new-issue').slideDown(200);
-	})
-	
-	$('.issue-list li').hover(function(event){
-		$(this).find('.operate').toggle();
-	})
 	
 	$('.issue-edit').click(function(){
 		var cmid = $(this).attr('data-cmid');
@@ -148,7 +159,73 @@ $(document).ready(function(){
 					$('body').animate({ scrollTop: formscroll + 'px' }, 200);
 				}
 			}
-		})
-	})
+		});
+	});
+	
+	$('.del-btn').click(function(){
+		var type = $(this).attr('data-type');
+		var id = $(this).attr('data-id');
+		$('#myModal .btn-data').attr({'data-type': type, 'data-id': id})
+	});
+	
+	$('#myModal .btn-data').click(function(){
+		var that = $(this);
+		var type = that.attr('data-type');
+		var id = that.attr('data-id');
+		that.unbind('click');
+		
+		$.ajax({
+			type: 'post',
+			url: '/issueDel',
+			data: {'type': type, 'id': id},
+			success: function(data){
+				console.log(data)
+				if(data.status === 'success'){
+					$('#myModal').fadeOut(100);
+					$('.modal-backdrop').fadeOut(100);
+					$('.issue-'+ id).fadeOut(500);
+					showResText(data.status, data.resTxt)
+				}
+			}
+		});
+	});
+	
+	$('.comment-box .del').click(function(){
+		var that = $(this);
+		var type = that.attr('data-type');
+		var id = that.attr('data-id');
+		var isid = that.attr('data-isid');
+		var bid = that.attr('data-bid');
+		var pid = that.attr('data-pid');
+		that.unbind('click');
+		console.log(bid);
+		$.ajax({
+			type: 'post',
+			url: '/commentDel',
+			data: {'type': type, 'id': id, 'pid': pid, 'isid': isid, 'bid': bid},
+			success: function(data){
+				console.log(data)
+				if(data.status === 'success'){
+					that.parentsUntil('.comment-box').parent().slideUp(100);
+					showResText(data.status, data.resTxt)
+				}
+			}
+		});
+	});
+
+	function showResText(status, str){
+		if(status === 'success'){
+			var html = '<div class="resTxt rtsuccess">'+str+'</div>';
+		}else if(status === 'error'){
+			var html = '<div class="resTxt rterror">'+str+'</div>';
+		}
+		$('body').append(html);
+		
+		var $resTxt = $('.resTxt');
+		$resTxt.slideDown(200);
+		$resTxt.delay(1500).slideUp(200, function(){
+			$resTxt.remove();
+		});
+	}
 	
 });

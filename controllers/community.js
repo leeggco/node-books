@@ -100,7 +100,30 @@ exports.newIssue = function(req, res){
 			})
 		})
 	}
+}
 
+exports.issueDel = function(req, res){
+	var type = req.body.type;
+	var id = req.body.id;
+	
+	if(type === 'issue'){
+		Community.findOne({'cmid': id}, function(err, data){
+			var cq = data.reply;
+			var uq = data.from;
+			console.log(data);
+			Comment.remove({_id: {$in: cq}}, function(err, cb){
+				console.log('评论表删除');
+			})
+			
+			User.update({_id: data.from}, {$pull: {'topics': 'ObjectId("'+data._id+'")'}}, function(err, cb){
+				console.log('用户表删除');
+			})
+			Community.remove({_id: data._id}, function(err, cb){
+				console.log('社区表删除');
+				res.send({'status': 'success', 'resTxt': '已删除！'})
+			})
+		})
+	}
 }
 
 

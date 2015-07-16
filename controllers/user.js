@@ -128,8 +128,12 @@ exports.userCenter = function(req, res){
     .populate({
       path:'devote_list', 
       select: 'bid name image pv dv create_time thanks',
-      limit:5,
-      sort: {'devote_list.create_time': -1}
+			options: {sort: {"create_time": -1}, limit: 3}
+    })
+		.populate({
+      path:'topics', 
+      select: 'cmid title create_time pv reply_count',
+			options: {sort: {"create_time": -1}, limit: 3}
     })
     .exec(function(err, data){
       if(err){

@@ -42,7 +42,9 @@
 				<% for(var i=0; i < json.devote_list.length; i++) { %>
 					<div class="profile-section-item clearfix">
 						<div class="pull-right">
-							<div class="book-edit"><a href="/book/edit/<%= json.devote_list[i].bid %>">编辑</a></div>
+							<% if(user === json.username ) {%>
+								<div class="book-edit"><a href="/book/edit/<%= json.devote_list[i].bid %>">编辑</a></div>
+							<% } %>
 							<div class="thanks text-center" title="收到<%= json.devote_list[i].thanks.length %>个感谢">
 								<span class="icon"></span>
 								<p class="count"><%= json.devote_list[i].thanks.length %></p>
@@ -57,13 +59,32 @@
 								<span>贡献时间：2015年6月8日</span>
 							</p>
 							<p class="pdv">
-								<span>下载次数：<%= json.devote_list[i].dv %>次</span>，
+								<span>下载次数：<%= json.devote_list[i].dv %>次</span> • 
  								<span>浏览次数：<%= json.devote_list[i].pv %>次</span>
 							</p>
 						</div>
 					</div>
 				<% } %>
 			</div>
+			
+			<div class="profile-section-wrap">
+				<% if(user === json.username ) {%>
+				<h2 class="profile-section-name">我的帖子</h2>
+				<% } else { %>
+				<h2 class="profile-section-name">TA的帖子</h2>
+				<% } %>
+				<% for(var i=0; i < json.topics.length; i++) { %>
+					<div class="issue-list">
+						<p><a href="/community/<%= json.topics[i].cmid %>" ><%= json.topics[i].title %></a></p>
+						<p class="mete">
+							<%= moment(json.topics[i].create_time).format("YYYY-MM-DD HH:mm") %> • 
+							<%= json.topics[i].reply_count %> 条回复 • 
+							<%= json.topics[i].pv %> 次浏览
+						</p>
+					</div>
+				<% } %>
+			</div>
+			
 		</div>
 
 
@@ -76,7 +97,7 @@
 	          <a href="/u/<%= visitors[i].visitors.user.username %>" class="pull-left"><img src="<%= visitors[i].visitors.user.gravatar %>?s=48" class="gravatar" width="48" alt=""></a>
 	          <div class="mate ">
 	            <p class="username"><a href="/u/<%= visitors[i].visitors.user.username %>"><%= visitors[i].visitors.user.username %></a></p>
-	            <p class="vtime date"><%= moment(visitors[i].visitors.at).format('YYYY-MM-DD HH:mm') %></p>
+	            <p class="vtime date"><%= moment(visitors[i].visitors.at).format("YYYY-MM-DD HH:mm") %></p>
 	          </div>
 	        </div>
 	      <% } %>

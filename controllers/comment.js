@@ -2,6 +2,7 @@ var mongoose = require('mongoose')
 var User = require('../models/user') 
 var Comment = require('../models/comment') 
 var Community = require('../models/community')
+var Book = require('../models/book')
 
 exports.save = function(req, res){
 	var _comment = req.body
@@ -22,7 +23,12 @@ exports.save = function(req, res){
 					if(err){
 						console.log(err)
 					}
-					res.send({msg: 'success', data: {}})
+					Book.update({'bid': _bid}, {$inc: {'reply_count': 1}}, function(err, cb){
+						if(err){
+							console.log(err)
+						}
+						res.send({msg: 'success', data: {}})
+					})
 				})
 			})
 		})
@@ -34,8 +40,13 @@ exports.save = function(req, res){
 				if(err){
 					console.log(err)
 				}
-
-				res.redirect('/detail/'+ _bid + '#comment' )
+				Book.update({'bid': _bid}, {$inc: {'reply_count': 1}}, function(err, cb){
+					if(err){
+						console.log(err)
+					}
+					res.redirect('/detail/'+ _bid + '#comment' )
+				})
+				
 			})
 		})
 	}
@@ -47,7 +58,7 @@ exports.isSave = function(req, res){
 	var _cid = _comment.cid
 	var _cmid = _comment.cmid
 	var _user = _comment.from
-	var is_id = _comment.is_id
+	var _is_id = _comment.is_id
 
 	if(_cid){
 		User.findOne({username: _user}, function(err, user){
@@ -58,7 +69,7 @@ exports.isSave = function(req, res){
 					content: _comment.content
 				}
 				comment.reply.push(reply)
-				Community.update({'_id': is_id}, {$inc: {'reply_count': 1}}, function(err, cb){
+				Community.update({'_id': _is_id}, {$inc: {'reply_count': 1}}, function(err, cb){
 					if(err){
 						console.log(err)
 					}
@@ -93,11 +104,11 @@ exports.isSave = function(req, res){
 }
 
 exports.isOperate = function(req, res){
-	var cmid = req.query.cmid
+	var _cmid = req.query.cmid
 	var handle = req.query.handle
 	
 	if(handle === 'edit'){
-		Community.findOne({'cmid': cmid}, {'cmid':1, 'title':1, 'content': 1}, function(err, data){
+		Community.findOne({'cmid': _cmid}, {'cmid':1, 'title':1, 'content': 1}, function(err, data){
 			if(err){
 				console.log(err)
 			}else {
@@ -107,5 +118,50 @@ exports.isOperate = function(req, res){
 	}
 }
 
+exports.commentDel = function(req, res){
+	var type = req.body.type;
+	var id = req.body.id;
+	var bid = req.body.bid;
+	var isid = req.body.isid;
+	var pid = req.body.pid;
+
+	if(type === 'comment'){
+		Comment.remove({_id: id}, function(err, data){
+			if(err){
+				console.log(err)
+			}
+			res.send({'status': 'success', 'resTxt': '已删除！'})
+		})
+	}
+	if(type === 'subcomment'){
+		Comment.update({_id: pid}, {$pull: {'reply': {_id: id}}}, function(err, data){
+			if(err){
+				console.log(err)
+			}else {
+				res.send({'status': 'success', 'resTxt': '已删除！'})
+			}
+		})
+	}
+	
+	if(isid){
+		Community.update({_id: isid}, {$inc: {'reply_count': -1}}, function(err, data){
+			if(err){
+				console.log(err)
+			}else {
+				console.log('递减数量')
+			}
+		})
+	}else if(bid) {
+		Book.update({_id: bid}, {$inc: {'reply_count': -1}}, function(err, data){
+			if(err){
+				console.log(err)
+			}else {
+				console.log('递减数量2')
+			}
+		})
+	}
+
+	
+}
 
 

@@ -96,7 +96,7 @@ exports.tothx = function(req, res){
 				{$push: {thanks: {'user': uid, 'username': data.username, 'thanks.at':  Date.now }}},
 				{upsert: true },
 				function(err, data){
-					res.send({msg: 'success'})
+					res.send({'status': 'success', 'resTxt': '已感谢 ^_^！'})
 			})
 
 	})

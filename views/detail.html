@@ -14,7 +14,7 @@
             <p><a href="/u/<%= json.from[0].username %>"><%= json.from[0].username %></a></p>
             <p class="tothx">
               <% if(thxed) {%>
-              <span class="icon iconActived" data-from="<%= user %>" data-bid="<%= json._id%>" title="感谢"></span>
+								<span class="icon iconActived" data-from="<%= user %>" data-bid="<%= json._id%>" title="感谢"></span>
               <% }else { %>
                 <span class="icon " <% if(user) {%> id="toThx" <%}%> data-from="<%= user %>" data-bid="<%= json._id%>" title="感谢"></span>
               <% } %>
@@ -57,14 +57,18 @@
                   <div class="item-content-hd"><a href="/u/<%= comments[i].from[0].username %>" id="" title="<%= comments[i].from[0].username %>"><%= comments[i].from[0].username %></a></div>
                   <div class="item-content"><%= comments[i].content %></div>
                   <div class="item-content-ft">
-                    <span class="date"><%= moment(comments[i].create_time).format('YYYY-MM-DD HH:mm') %></span>
-                    <a href="javacript:;" class="<% if(user) {%> reply <% }else {%> unlogin <% } %>" data-cid="<%= comments[i]._id %>" data-uid="<%= comments[i].from[0]._id %>" data-user="<%= user %>">回复</a>
+                    <span class="date"><%= moment(comments[i].create_time).format("YYYY-MM-DD HH:mm") %></span>
+										<% if(user === comments[i].from[0].username) {%>
+											<a href="javscript:;" class="del" data-bid="<%= json._id%>" data-type="comment" data-id="<%= comments[i]._id %>">删除</a>
+										<% }else { %>
+											<a href="javascript:;" class="<% if(user) {%> reply <% }else {%> unlogin <% } %>" data-cid="<%= comments[i]._id %>" data-bid="<%= json.bid %>" data-uid="<%= comments[i].from[0]._id %>" data-user="<%= user %>">回复</a>
+										<% } %>
                     <div class="reply-box row">
-                      <div class="col-sm-11 text-box">
+                      <div class="col-sm-10 text-box">
                        <input type="text" class="form-control reply-text" >
                       </div>
-                      <div class="col-sm-1 btn-box">
-                        <button type="button" class="btn btn-primary reply-btn">回复</button>
+                      <div class="col-sm-2 btn-box">
+                        <button type="button" class="btn btn-success reply-btn">回复</button>
                       </div>
                     </div>
                   </div>
@@ -78,15 +82,18 @@
                             <div class="item-content-hd"><a href="/u/<%= comments[i].reply[j].from.username %>" id="" title="<%= comments[i].reply[j].from.username %>"><%= comments[i].reply[j].from.username %></a><span class="whosreply"> 回复 </span><a href="/u/<%= comments[i].reply[j].to.username %>" id="" title="<%= comments[i].reply[j].to.username %>"><%= comments[i].reply[j].to.username %></a></div>
                             <div class="item-content"><%= comments[i].reply[j].content %></div>
                             <div class="item-content-ft">
-                              <span class="date"><%= moment(comments[i].reply[j].create_time).format('YYYY-MM-DD HH:mm') %></span>
-                              <a href="javacript:;" class="<% if(user) {%> reply <% }else {%> unlogin <% } %>" data-cid="<%= comments[i]._id %>" data-uid="<%= comments[i].reply[j].from._id %>" data-user="<%= user %>">回复</a>
-														
+                              <span class="date"><%= moment(comments[i].reply[j].create_time).format("YYYY-MM-DD HH:mm") %></span>
+															<% if(user === comments[i].reply[j].from.username ) {%>
+																<a href="javascript:;" class="del" data-bid="<%= json._id%>" data-type="subcomment" data-pid="<%= comments[i]._id %>"  data-id="<%= comments[i].reply[j]._id %>">删除</a>
+															<% }else { %>
+																<a href="javacript:;" class="<% if(user) {%> reply <% }else {%> unlogin <% } %>" data-cid="<%= comments[i]._id %>" data-bid="<%= json.bid %>" data-uid="<%= comments[i].reply[j].from._id %>" data-user="<%= user %>">回复</a>
+															<% } %>
                               <div class="reply-box row">
-                                <div class="col-sm-11 text-box">
+                                <div class="col-sm-10 text-box">
                                  <input type="text" class="form-control reply-text" >
                                 </div>
-                                <div class="col-sm-1 btn-box">
-                                  <button type="button" class="btn btn-primary reply-btn">回复</button>
+                                <div class="col-sm-2 btn-box">
+                                  <button type="button" class="btn btn-success reply-btn">回复</button>
                                 </div>
                               </div>
                             </div>
@@ -110,7 +117,7 @@
               <div class="mate pull-left">
                 <a href="/u/<%= user %>" title="<%= user %>"><img src="<%= gravatar %>?s=32" class="gravatar" width="32" height="32" alt=""></a><span class="username"> signed as</span><a href="/u/<%= user %>" title="<%= user %>"> <span><%= user %></span></a>
               </div>
-              <input type="submit" class="btn btn-primary pull-right" value="提交">
+              <input type="submit" class="btn btn-success cm-submit pull-right" value="提交">
             <% } else { %>
               <a href="/signup">登陆后评论</a>
             <% } %>
@@ -119,14 +126,14 @@
       </div>
 
     </div>
-    <% if(books.books.length > 1){ %>
+    <% if(books.books.length >= 1){ %>
     <div class="col-md-4 slide-rd">
       <h4 class="recommendation">相关推荐</h4>
       <% for(var i = 0; i < books.books.length; i++) {%>
         <div class="rd-item clearfix">
           <a href="/detail/<%= books.books[i].bid %>" title="<%= books.books[i].name %>" ><img class="pull-left coverPic " src="<%= books.books[i].image %>" width="80" alt="<%= books.books[i].name %>"></a>
           <div class="mate">
-            <p class="rd-link">书名：<a href="/detail/<%= books.books[i].bid %>" ><%= books.books[i].name %></a></p>
+            <p class="rd-link">书名：<a href="/detail/<%= books.books[i].bid %>" title="<%= books.books[i].name %>" ><%= books.books[i].name %></a></p>
             <p class="rd-author">作者：<%= books.books[i].author %></p>
             <p class="rd-category">分类：<%= books.name %></p>
             <% if(books.books[i].average > 0) { %>
@@ -146,7 +153,7 @@
           <a href="/u/<%= visitors[i].visitors.user.username %>" class="pull-left"><img src="<%= visitors[i].visitors.user.gravatar %>?s=48" class="gravatar" width="48" alt=""></a>
           <div class="mate ">
             <p class="username"><a href="/u/<%= visitors[i].visitors.user.username %>"><%= visitors[i].visitors.user.username %></a></p>
-            <p class="vtime date"><%= moment(visitors[i].visitors.at).format('YYYY-MM-DD HH:mm') %></p>
+            <p class="vtime date"><%= moment(visitors[i].visitors.at).format("YYYY-MM-DD HH:mm") %></p>
           </div>
         </div>
       <% } %>
