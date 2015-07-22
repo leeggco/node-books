@@ -12,16 +12,22 @@
 							<a href="#" class="btn btn-success" >我要发表</a>
 						</div>
 						<div class="form-group">
-							<input type="text" style="width:200px;" placeholder="请输入搜索内容" class="form-control" />
+							<input type="text" style="width:200px;" name="wd" placeholder="请输入搜索内容" class="form-control" />
 						</div>
 						<div class="form-group">
-							<input type="button" class="btn btn-default" value="搜索" />
+							<input type="submit" class="btn btn-default" value="搜索" />
 						</div>
 					</form>
 				</div>
 				<div class="subnav-links pull-left ">
-					<a href="#" class="subnav-item selected">最新</a>
-					<a href="#" class="subnav-item">最热</a>
+					<% if(sort === "hot") {%>
+						<a href="/community" class="subnav-item ">最新</a>
+						<a href="/community?sort=hot" class="subnav-item selected">最热</a>
+					<% }else {%>
+						<a href="/community" class="subnav-item selected">最新</a>
+						<a href="/community?sort=hot" class="subnav-item ">最热</a>
+					<% } %>
+
 				</div>
 			</div>
 			
@@ -49,6 +55,9 @@
 			</div>
 
 			<div class="issue-list-wrap">
+				<% if(wd!= "" ) {%>
+					<h3 class="cath3">搜索：<%= wd %>，共 <%= json.length %> 条</h3>
+				<% } %>
 				<ul class="issue-list">
 				<% for(var i = 0; i < json.length; i++) {%>
 					<li class="issue-item issue-<%= json[i].cmid %>">

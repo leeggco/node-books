@@ -11,6 +11,7 @@ router.get('', Index.index)
 
 // Community
 router.get('/community', Community.index)
+router.get('/cmsearch', Community.search)
 router.get('/community/:cmid', Community.issuePage)
 router.post('/newIssue', User.singinRequired, Community.newIssue)
 router.post('/issueDel', User.singinRequired, Community.issueDel)

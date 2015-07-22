@@ -37,6 +37,7 @@
           <p><strong>ISBN：</strong> <%= json.isbn %> </p>
           <p><strong>分类：</strong><a href="/category/<%= category %>"> <%= category %></a></p>
           <p><strong>下载地址：</strong> <%- json.sky_drive %></p>
+          <% if(json.remark) { %><p><strong>备注：</strong>  <%- json.remark %></p><% } %>
         </div>
       </div>
 
@@ -145,15 +146,15 @@
     </div>
     <% } %>
 
-    <% if(visitors.length > 0){ %>
+    <% if(json.visitors.length > 0){ %>
     <div class="col-md-4 slide-rd slide-rd2">
       <h4 class="recommendation">谁也来看过</h4>
-      <% for(var i = 0; i < visitors.length; i++) {%>
+      <% for(var i = 0; i < json.visitors.length; i++) {%>
         <div class="rd-item clearfix">
-          <a href="/u/<%= visitors[i].visitors.user.username %>" class="pull-left"><img src="<%= visitors[i].visitors.user.gravatar %>?s=48" class="gravatar" width="48" alt=""></a>
+          <a href="/u/<%= json.visitors[i].user.username %>" class="pull-left"><img src="<%= json.visitors[i].user.gravatar %>?s=48" class="gravatar" width="48" alt=""></a>
           <div class="mate ">
-            <p class="username"><a href="/u/<%= visitors[i].visitors.user.username %>"><%= visitors[i].visitors.user.username %></a></p>
-            <p class="vtime date"><%= moment(visitors[i].visitors.at).format("YYYY-MM-DD HH:mm") %></p>
+            <p class="username"><a href="/u/<%= json.visitors[i].user.username %>"><%= json.visitors[i].user.username %></a></p>
+            <p class="vtime date"><%= moment(json.visitors[i].at).format("YYYY-MM-DD HH:mm") %></p>
           </div>
         </div>
       <% } %>

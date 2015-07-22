@@ -16,7 +16,7 @@ var BookSchema = new Schema({
   sky_drive: String,                                     //网盘地址
   description: String,                                   //内容简介
   press_time: String,                                    //出版时间
-  url: String,                                           //官网链接
+  remark: String,                                        //备注
   average: { type: String, default: '0' },               //豆瓣评分
   reply_count: { type: String, default: '0' },           //评论数
   create_time: { type: Date, default: Date.now },        //创建时间
@@ -29,13 +29,8 @@ var BookSchema = new Schema({
     at: {type: Date, default: Date.now }
   }],
   visitors: [{
-    user: {
-      uid: {type: objectId, ref: 'Users'},
-      username: String,
-      gravatar: String
-    },
-    at: {type: Date, default: Date.now },
-    navigator: String
+    user: {type: objectId, ref: 'Users'},
+    at: {type: Date, default: Date.now }
   }]
 });
 

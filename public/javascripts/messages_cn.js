@@ -81,6 +81,9 @@ $("#addform").validate({
 		name:{
 			required:true
 		},
+		author:{
+			required:true
+		},
 		categoryName:{
 			required:true
 		},

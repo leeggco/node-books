@@ -9,37 +9,39 @@
                 <input class="form-control" type="hidden" name="average" id="average" value="0">
                 <div class="form-group">
                     <label for="douban" class="col-sm-4 control-label">豆瓣采集</label>
-                    <div class="col-sm-4 form-pr">
-                        <input class="form-control" type="text" name="douban" id="douban"/><span>如何采集？</span>
+                    <div class="col-sm-6 form-pr">
+                        <input class="form-control" type="text" name="douban" id="douban"/>
+												<a class="dbtips" data-toggle="modal" data-target="#newModal" href="javascript:;">如何采集？</a>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="name" class="col-sm-4 control-label">书名</label>
-                    <div class="col-sm-8 form-pr">
+                    <div class="col-sm-6 form-pr">
                         <input class="form-control" type="text" name="name" id="name"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="author" class="col-sm-4 control-label">作者</label>
-                    <div class="col-sm-8 form-pr">
+                    <div class="col-sm-6 form-pr">
                         <input class="form-control" type="text" name="author" id="author"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="categoryName" class="col-sm-4 control-label">分类</label>
-                    <div class="col-sm-8 form-pr">
+                    <div class="col-sm-6 form-pr">
                         <input class="form-control" type="text" name="categoryName" id="categoryName"/>
+												<a class="dbtips" data-toggle="popover" data-trigger="focus" title="分类填写" data-content="如果分类已存在，请直接使用。否则请使用最贴合的分类。" href="javascript:;">如何填写？</a>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="isbn" class="col-sm-4 control-label">ISBN</label>
-                    <div class="col-sm-8 form-pr">
+                    <div class="col-sm-6 form-pr">
                         <input class="form-control" type="text" name="isbn" id="isbn"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="page" class="col-sm-4 control-label">页数</label>
-                    <div class="col-sm-8 form-pr">
+                    <div class="col-sm-6 form-pr">
                         <input class="form-control" type="text" name="page" id="page"/>
                     </div>
                 </div>
@@ -59,19 +61,21 @@
                     <label for="press_time" class="col-sm-4 control-label">出版时间</label>
                     <div class="col-sm-8 form-pr">
                         <input class="form-control" type="text" name="press_time" id="press_time"/>
+												
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="sky_drive" class="col-sm-4 control-label">网盘地址</label>
                     <div class="col-sm-8 form-pr">
                         <input class="form-control" type="text" name="sky_drive" id="sky_drive"/>
+												<a class="dbtips lgtips" data-toggle="popover" data-trigger="focus" title="" data-content="由于网站空间有限暂时不支持直接上传到空间，推荐使用【百度云私密分享】，或者其他网盘。" href="javascript:;" data-original-title="网盘填写">如何填写？</a>
                     </div>
                 </div>
                
                 <div class="form-group">
-                    <label for="url" class="col-sm-4 control-label">官网链接</label>
+                    <label for="remark" class="col-sm-4 control-label">备注</label>
                     <div class="col-sm-8 form-pr">
-                        <input class="form-control" type="text" name="url" id="url"/>
+                        <input class="form-control" type="text" name="remark" id="remark"/>
                     </div>
                 </div>
                 
@@ -88,4 +92,37 @@
     </form>
 
 </div>
+
+<div class="modal fade" id="newModal">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">采集步骤</h4>
+			</div>
+			<div class="modal-body">
+				<p><strong>步骤1：</strong></p>
+				<p>到<a href="http://book.douban.com/" target="_blank">豆瓣读书</a>搜索要上传的书名</p>
+				<p><strong>步骤2：</strong></p>
+				<p>进入该书籍的详情页，复制该链接地址的数字编码（一串数字），如：</p>
+				<p>book.douban.com/subject/<span style="background:#ddd">10546125</span>/</p>
+				<p><strong>步骤3：</strong></p>
+				<p>将编码复制到输入框内，点击空白处即可完成采集。</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" data-dismiss="modal">明白了</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script>
+	$(function () {
+		$('[data-toggle="popover"]').popover();
+		$('#c_save').click(function(){
+			$('.dbtips:gt(0)').hide();
+		})
+	})
+</script>
+
 <% include footer.html %>

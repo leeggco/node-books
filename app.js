@@ -13,6 +13,7 @@ var routes = require('./routes/index');
 var User = require('./models/user');
 var dbUrl = 'mongodb://localhost/books';
 var app = express();
+var easyimg = require('easyimage');
 
 mongoose.connect(dbUrl, function(err){
   if(err){
@@ -36,7 +37,15 @@ app.use(session({
   })
 }));
 
+//0a3765f0-2f75-11e5-b9d4-978b0b4e69b5.jpg
 // view engine setup
+easyimg.info('avatars/0a3765f0-2f75-11e5-b9d4-978b0b4e69b5.jpg').then(
+  function(file) {
+    console.log(file);
+  }, function (err) {
+    console.log(err);
+  }
+);
 
 app.set('views', path.join(__dirname, 'views'));
 app.engine('html', ejs.__express);

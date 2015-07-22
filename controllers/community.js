@@ -6,25 +6,62 @@ var Comment = require('../models/comment')
 var Community = require('../models/community')
 
 exports.index = function(req, res){
-	Community
-		.find({})
-		.populate({
-			path: 'from',
-			select: 'username gravatar uid'
-		})
-		.sort({'update_time': -1})
-		.limit(10)
-		.exec(function(err, data){
-			for(var i = 0; i < data.length; i++){
-				if(data[i].content.length >= 140){
-					var random = parseInt(10 * Math.random()) + 140 
-					data[i].content = data[i].content.substring(0, random) + '...'
+	var sort = req.query.sort;
+	
+	if(sort === 'hot'){
+		Community
+			.find({})
+			.populate({
+				path: 'from',
+				select: 'username gravatar uid'
+			})
+			.sort({'pv': -1})
+			.limit(10)
+			.exec(function(err, data){
+				for(var i = 0; i < data.length; i++){
+					if(data[i].content.length >= 140){
+						var random = parseInt(10 * Math.random()) + 140 
+						data[i].content = data[i].content.substring(0, random) + '...'
+					}
 				}
-			}
-			//data = data.content.toSting().substring(0, random)
-			console.log(data);
-			res.render('community', {title:'社区 | 天天书屋', current:'community', json: data, moment: moment})
-		})
+				console.log(data)
+				res.render('community', {
+					title:'社区 | 天天书屋', 
+					current:'community', 
+					json: data, 
+					sort:'hot',
+					wd:'',
+					moment: moment
+				})
+			})
+	}else {
+		Community
+			.find({})
+			.populate({
+				path: 'from',
+				select: 'username gravatar uid'
+			})
+			.sort({'update_time': -1})
+			.limit(10)
+			.exec(function(err, data){
+				for(var i = 0; i < data.length; i++){
+					if(data[i].content.length >= 140){
+						var random = parseInt(10 * Math.random()) + 140 
+						data[i].content = data[i].content.substring(0, random) + '...'
+					}
+				}
+
+				res.render('community', {
+					title:'社区 | 天天书屋', 
+					current:'community', 
+					sort:'new',
+					json: data, 
+					wd:'',
+					moment: moment
+				})
+			})
+	}
+
 }
 
 exports.issuePage = function(req, res){
@@ -126,4 +163,24 @@ exports.issueDel = function(req, res){
 	}
 }
 
-
+// 社区搜索
+exports.search = function(req, res){
+	var wd = req.query.wd
+	
+	Community
+		.find({title:  {$regex: wd, $options:'i'} })
+		.populate({
+			path: 'from',
+			select: 'username gravatar uid'
+		})
+		.exec(function(err, data){
+			res.render('community', {
+				title: '搜索结果页 | 天天书屋',
+				current:'community', 
+				json: data,
+				sort: '',
+				moment: moment,
+				wd: wd
+			})
+		})
+}

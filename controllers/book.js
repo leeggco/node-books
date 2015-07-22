@@ -10,26 +10,39 @@ var Comment = require('../models/comment')
 exports.ownership = function(req, res, next){
   var bid = req.params.bid
   var username = req.session.user
-  Book
-  	.findOne({bid: bid})
-  	.populate({
-  		path: 'from',
-  		select: 'username'
-  	})
-  	.exec(function(err, data){
-  		console.log(data)
-  		console.log(data.from.length)
-  		if(data.from.length >= 1){
-	  		if(data.from[0].username == username){
-	  			next()
-	  		}	else{
-	  			res.redirect('/')
-	  		}
-  		} else {
-  			res.redirect('/')
-  		}
-  	})
-  	// Book.ownership, 
+	var role;
+	
+	User.find({'username': username}, function(err, user){
+		var role = 0;
+		if(err){
+			console.log(err)
+		}else {
+			
+			role = user[0].role;
+			Book
+				.findOne({bid: bid})
+				.populate({
+					path: 'from',
+					select: 'username'
+				})
+				.exec(function(err, data){
+					if(role >= 10){
+						next()
+					}else {
+						if(data.from.length >= 1){
+							if(data.from[0].username == username ){
+								next()
+							}	else{
+								res.redirect('/')
+							}
+						} else {
+							res.redirect('/')
+						}
+					}
+				})
+		}
+	})
+
 }
 
 // 编辑书籍
@@ -52,13 +65,12 @@ exports.edit = function(req, res){
 exports.newbooks = function(req, res){
 	Book.count({}, function(err, total){
 		var rp = req.query.p || 1;
-		var p = parseInt(total / 10);
+		var p = Math.ceil(total / 10);
 		var skipCount = (rp - 1) * 10;
 		var pageOpts = {};
 		var sinx = (req.url).indexOf('?');
 		var url = (req.url).substring(0, sinx);
-
-		if(p > 1){
+		if(p >= 1){
 			pageOpts = {
 				url: url + '?p=',
 				showPage: true,
@@ -77,8 +89,12 @@ exports.newbooks = function(req, res){
 				select: 'name'
 			})
 			.exec(function(err, data){
-				console.log(data)
-				res.render('newbooks', { title: '最新收录 | 天天书屋', current:'newbooks', json: data, pageOpts: pageOpts });
+					res.render('newbooks', { 
+					title: '最新收录 | 天天书屋', 
+					current:'newbooks', 
+					json: data, 
+					pageOpts: pageOpts 
+				});
 			})
 	})
 }
@@ -168,7 +184,7 @@ exports.detail = function(req, res){
 
 			if(user){
 				for (var i=0; i< data.visitors.length; i++){
-					if(user._id.toString() === data.visitors[i].user.uid.toString() && data.visitors[i].at > x){
+					if(user._id.toString() === data.visitors[i].user.toString() && data.visitors[i].at > x){
 						isHased = true
 						break
 					}
@@ -183,12 +199,7 @@ exports.detail = function(req, res){
 						$inc: {pv: 1},
 						$push: {
 							visitors: {
-								user: {
-									uid: user._id,
-									username: user.username,
-									gravatar: user.gravatar
-								},
-								navigator: req.headers['user-agent']
+								user: user._id
 							}
 						}
 					},
@@ -221,11 +232,11 @@ exports.detail = function(req, res){
   })
 
 	Book
-		.findOne({bid: _bid}, {visitors: 0})
-		.populate('category from', 'uid username gravatar ')
+		.findOne({bid: _bid})
+		.populate('category from visitors.user', 'uid username gravatar visitors.username')
 		.exec(function(err, book){
 			var thxed = false;
-
+			console.log(book)
 			for (var i = 0; i < book.thanks.length; i++){
 				if(book.thanks[i].username == _user && _user != undefined){
 					console.log('yes')
@@ -258,13 +269,13 @@ exports.detail = function(req, res){
 									books.books.splice(i,1)
 								}
 							}
-							
+													
 							// 下载地址字符串处理
 							var sky_drive = book.sky_drive;	
 							if(sky_drive != ''){
-								if(sky_drive.indexOf('链接: http://pan') > -1){
+								if(sky_drive.indexOf('http://pan') > -1 && sky_drive.indexOf('密码') > -1){
 									var passinx = sky_drive.indexOf('密码') - 4
-									var temp = sky_drive.substr(4)
+									var temp = sky_drive.substr(3)
 									sky_drive = '<a class="download-link" href="'+ temp.substring(0, passinx) + '" bid="'+ book.bid +'" target="_blank">'+ temp.substring(0, passinx) + '</a>' + temp.substr(passinx)
 									book.sky_drive = sky_drive;
 								}
@@ -305,7 +316,7 @@ exports.save = function(req, res){
 	var categoryId = bookObj.category
 	var categoryName = bookObj.categoryName
 	var upperCN = categoryName.toUpperCase()
-
+	console.log(bookObj)
 	if(id){	
 		Book.findById(id, function(err, book){
 			if (err) {
