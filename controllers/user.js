@@ -7,7 +7,7 @@ var path = require('path')
 var formidable = require('formidable')
 var util = require('util')
 var uuid = require('node-uuid')
-
+var qn = require('qn')
 
 // 登录页面
 exports.showSignin = function(req, res){
@@ -103,7 +103,24 @@ exports.fileUpload = function(req, res){
     var newPath = form.uploadDir + avatarName;
 
     fs.renameSync(files.inputfile.path, newPath);   //重命名
-    res.send({'imgurl': '/avatars/'+ avatarName});                 //返回数据
+		
+		var qnurl = 'http://7xkl18.com1.z0.glb.clouddn.com/'
+		var client = qn.create({
+			accessKey: 'b8T--dSC-MiUe9St8zKbicb6BU8RxPJsTIBxsj-I',
+			secretKey: 'Z_pw1clvrmvginYUwycttV0yX36jEHfVT4F0GpNf',
+			bucket: 'ttbooks',
+			domain: 'http://ttbooks.u.qiniudn.com',
+			// timeout: 3600000, // default rpc timeout: one hour, optional
+			// if your app outside of China, please set `uploadURL` to `http://up.qiniug.com/`
+			//uploadURL: 'http://up.qiniu.com/'
+		});
+
+		// upload a file with custom key
+		client.uploadFile(newPath, {key: avatarName}, function (err, result) {
+			res.send({'imgurl': qnurl + result['x:filename']});
+			fs.unlinkSync(newPath);
+		});
+
   });
 }
 
