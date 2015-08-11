@@ -35,7 +35,7 @@
         <% if(user) { %>
           <a href="/u/<%= user %>" title="<%= user %>">
 		  <% if(gravatar) { %>
-			<img src="<%= gravatar %>?s=24" class="gravatar" width="24" alt="">
+			<img src="<%= gravatar %>" class="gravatar" width="24" alt="">
 		   <% } %>
 		  <span><%= user %></span></a> &nbsp;|&nbsp; <a href="/signout">退出</a>  
         <% } else {%>

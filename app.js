@@ -22,6 +22,63 @@ mongoose.connect(dbUrl, function(err){
   }
 });
 
+/*
+var schedule = require('node-schedule');
+var rule = new schedule.RecurrenceRule();
+rule.minute = 42;
+var j = schedule.scheduleJob(rule, function(){
+  console.log('The answer to life, the universe, and everything!');
+
+	superagent.get('http://www.socwall.com/');
+		.end(function (err, sres) {
+			// 常规的错误处理
+			if (err) {
+				return err;
+			}
+			// sres.text 里面存储着网页的 html 内容，将它传给 cheerio.load 之后
+			// 就可以得到一个实现了 jquery 接口的变量，我们习惯性地将它命名为 `$`
+			// 剩下就都是 jquery 的内容了
+			var $ = cheerio.load(sres.text);
+			var items = [];
+			$('#content .wallpaper .image img').each(function (idx, element) {
+				var $element = $(element);
+				console.log($element)
+				items.push({
+					src: $element.attr('src')
+				});
+			});
+			console.log(items)
+		});
+});
+
+var timer = setInterval(function() {
+	superagent.get('https://www.500px.com/')
+	.end(function (err, sres) {
+		// 常规的错误处理
+		if (err) {
+			return err;
+		}
+		// sres.text 里面存储着网页的 html 内容，将它传给 cheerio.load 之后
+		// 就可以得到一个实现了 jquery 接口的变量，我们习惯性地将它命名为 `$`
+		// 剩下就都是 jquery 的内容了
+		var $ = cheerio.load(sres.text);
+		var items = [];
+		$('.photo_container .photo_thumbnail .photo ').each(function (idx, element) {
+			var $element = $(element);
+			console.log($element)
+			items.push({
+				style: $element.attr('style')
+			});
+		});
+		console.log(items)
+		clearInterval(timer);
+	});
+}, 60 * 1000);
+
+*/
+
+
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -35,7 +92,6 @@ app.use(session({
     collection: 'sessions'
   })
 }));
-
 
 app.set('views', path.join(__dirname, 'views'));
 app.engine('html', ejs.__express);

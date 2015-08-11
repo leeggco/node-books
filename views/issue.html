@@ -84,7 +84,7 @@
 					<textarea name="content" rows="3"  class="form-control"></textarea>
 					<% if(user) { %>
 						<div class="mate pull-left">
-							<a href="/u/<%= user %>" title="<%= user %>"><img src="<%= gravatar %>?s=32" class="gravatar" width="32" height="32" alt=""></a><span class="username"> signed as</span><a href="/u/<%= user %>" title="<%= user %>"> <span><%= user %></span></a>
+							<a href="/u/<%= user %>" title="<%= user %>"><img src="<%= gravatar %>" class="gravatar" width="32" height="32" alt=""></a><span class="username"> signed as</span><a href="/u/<%= user %>" title="<%= user %>"> <span><%= user %></span></a>
 						</div>
 						<input type="submit" class="btn btn-success cm-submit pull-right" value="提交">
 					<% } else { %>

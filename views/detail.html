@@ -10,7 +10,7 @@
         <% if(json.from[0]){ %>
           <div class="dedicate-user text-center">
             <p>贡献者</p>
-            <p class=""><a href="/u/<%= json.from[0].username %>"><img src="<%= json.from[0].gravatar %>?s=48" alt="" width="48" height="48" class="gravatar"></a></p>  
+            <p class=""><a href="/u/<%= json.from[0].username %>"><img src="<%= json.from[0].gravatar %>" alt="" width="48" height="48" class="gravatar"></a></p>  
             <p><a href="/u/<%= json.from[0].username %>"><%= json.from[0].username %></a></p>
             <p class="tothx">
               <% if(thxed) {%>
@@ -116,7 +116,7 @@
             <textarea name="content" rows="3"  class="form-control"></textarea>
             <% if(user) { %>
               <div class="mate pull-left">
-                <a href="/u/<%= user %>" title="<%= user %>"><img src="<%= gravatar %>?s=32" class="gravatar" width="32" height="32" alt=""></a><span class="username"> signed as</span><a href="/u/<%= user %>" title="<%= user %>"> <span><%= user %></span></a>
+                <a href="/u/<%= user %>" title="<%= user %>"><img src="<%= gravatar %>" class="gravatar" width="32" height="32" alt=""></a><span class="username"> signed as</span><a href="/u/<%= user %>" title="<%= user %>"> <span><%= user %></span></a>
               </div>
               <input type="submit" class="btn btn-success cm-submit pull-right" value="提交">
             <% } else { %>
@@ -151,7 +151,7 @@
       <h4 class="recommendation">谁也来看过</h4>
       <% for(var i = 0; i < json.visitors.length; i++) {%>
         <div class="rd-item clearfix">
-          <a href="/u/<%= json.visitors[i].user.username %>" class="pull-left"><img src="<%= json.visitors[i].user.gravatar %>?s=48" class="gravatar" width="48" alt=""></a>
+          <a href="/u/<%= json.visitors[i].user.username %>" class="pull-left"><img src="<%= json.visitors[i].user.gravatar %>" class="gravatar" width="48" alt=""></a>
           <div class="mate ">
             <p class="username"><a href="/u/<%= json.visitors[i].user.username %>"><%= json.visitors[i].user.username %></a></p>
             <p class="vtime date"><%= moment(json.visitors[i].at).format("YYYY-MM-DD HH:mm") %></p>

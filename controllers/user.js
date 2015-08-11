@@ -61,7 +61,8 @@ exports.updateUserInfos = function(req, res){
       if(err){
         console.log(err)
       }else {
-        res.redirect('/u/' + username)
+				console.log(username);
+        res.redirect('/u/' + encodeURI(username))
       }
     }
   )
@@ -109,15 +110,13 @@ exports.fileUpload = function(req, res){
 			accessKey: 'b8T--dSC-MiUe9St8zKbicb6BU8RxPJsTIBxsj-I',
 			secretKey: 'Z_pw1clvrmvginYUwycttV0yX36jEHfVT4F0GpNf',
 			bucket: 'ttbooks',
-			domain: 'http://ttbooks.u.qiniudn.com',
-			// timeout: 3600000, // default rpc timeout: one hour, optional
-			// if your app outside of China, please set `uploadURL` to `http://up.qiniug.com/`
-			//uploadURL: 'http://up.qiniu.com/'
+			domain: 'http://ttbooks.u.qiniudn.com'
 		});
 
 		// upload a file with custom key
 		client.uploadFile(newPath, {key: avatarName}, function (err, result) {
 			res.send({'imgurl': qnurl + result['x:filename']});
+			console.log('imgurl:' + qnurl + result['x:filename'])
 			fs.unlinkSync(newPath);
 		});
 

@@ -14,7 +14,7 @@
 					<% } %>
 				</div>
 				<div class="avatar pull-left">
-					<img src="<%= json.gravatar %>?s=100" alt="<%= json.username %>">
+					<img src="<%= json.gravatar %>" alt="<%= json.username %>">
 				</div>
 				<div class="profile-hd-info">
 					<p class="nickname"><%= json.username %></p>
@@ -94,7 +94,7 @@
     	<h2 class="profile-section-name">访客记录</h2>
 	      <% for(var i = 0; i < visitors.length; i++) {%>
 	        <div class="rd-item clearfix">
-	          <a href="/u/<%= visitors[i].visitors.user.username %>" class="pull-left"><img src="<%= visitors[i].visitors.user.gravatar %>?s=48" class="gravatar" width="48" alt=""></a>
+	          <a href="/u/<%= visitors[i].visitors.user.username %>" class="pull-left"><img src="<%= visitors[i].visitors.user.gravatar %>" class="gravatar" width="48" alt=""></a>
 	          <div class="mate ">
 	            <p class="username"><a href="/u/<%= visitors[i].visitors.user.username %>"><%= visitors[i].visitors.user.username %></a></p>
 	            <p class="vtime date"><%= moment(visitors[i].visitors.at).format("YYYY-MM-DD HH:mm") %></p>

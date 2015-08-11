@@ -14,7 +14,7 @@
 					<div class="profile-module clearfix">
 						<h5>头像</h5>
 						<div class="profile-module-desc">
-							<div class="avatar-preview pull-left"><img src="<%= json.gravatar %>?s=100" width="100" alt="<%= json.username %>"></div>
+							<div class="avatar-preview pull-left"><img src="<%= json.gravatar %>" width="100" alt="<%= json.username %>"></div>
 							<div class="form-group pull-left">
 					      <label for="inputfile" >选择头像</label>
 					      <input type="file" id="inputfile" name="inputfile">
@@ -75,47 +75,70 @@
 	
 	<script>
 		$(function(){
-			$('#inputfile').on('change', function(){
-				var files = !!this.files ? this.files : [];
-				if (!files.length || !window.FileReader) return;
-				if (/^image/.test( files[0].type)){		//not support IE
-					var reader = new FileReader();
-					reader.readAsDataURL(files[0]);
-					reader.onloadend = function(){
-						$('.avatar-edit-layort').show();
-						$('#avatar-Jcrop').attr('src', this.result);
-						$('#avatar-Jcrop').Jcrop({
-							boxWidth: 400,
-							aspectRatio: 100/100
-						}, function(){
-							jcrop_api = this;
-							jcrop_api.animateTo([100, 100, 400, 400]);
-						});
-					}
-				}
-			})
-
-			$('.btn-crop').click(function(){
+			var imgopts, imgurl, jcropopts = {};
+ 			$('#inputfile').live('change', function() { 			
 				$.ajaxFileUpload({
-					url:'/fileUpload',
-					secureuri:false,
+					url: '/fileUpload',
+					secureuri: false,
 					fileElementId: 'inputfile',
 					dataType: 'json',
 					success: function(data, status){
 						if(status == 'success'){
-							$('.avatar-edit-layort').hide();
-							$('.avatar-preview img').attr('src', data.imgurl)
-							$('#avatar-edited').val(data.imgurl)
-
+							$('.avatar-edit-layort').show();
+							$('#avatar-Jcrop').attr('src', data.imgurl + '?s=' + new Date().getTime());
+							$('#avatar-Jcrop').Jcrop({
+								boxWidth: 400,
+								maxSize: 600,
+								aspectRatio: 100/100,
+								onChange: showCoords,
+								onSelect: showCoords,
+								onRelease: onRelease
+							}, function(){
+								jcrop_api = this;
+								var getBounds = jcrop_api.getBounds();
+								$('.avatar-edit-box').css({
+									'width': getBounds[0] + 40,
+									'height': getBounds[1]+ 80,
+									'margin-left': - (getBounds[0] + 40) /2 + 'px'
+								});
+								jcrop_api.animateTo([0, 0, 400, 400]);
+							});
+							imgurl = data.imgurl;
 						}
 					},
 					error: function(data, status, err){
 						alert(err)
 					}
 				})
-				
 			})
+			
+			$('.btn-crop').click(function(){
+				$('.avatar-edit-layort').hide();
+				$('.avatar-preview img').attr('src', imgurl + imgopts)
+				$('#avatar-edited').val(imgurl + imgopts);
+				$('#avatar-Jcrop').attr('src', '');
+				var JcropAPI = $('#avatar-Jcrop').data('Jcrop');
+				JcropAPI.destroy();
+			})
+			
+			$('.cance-crop').click(function(){
+				$('.avatar-edit-layort').hide();
+				var JcropAPI = $('#avatar-Jcrop').data('Jcrop');
+				JcropAPI.destroy();
+			})
+			
+			function showCoords(c){
+				imgopts = '?imageMogr2/crop/!'+ c.w +'x'+ c.h+ 'a' + c.x + 'a' + c.y;
+			};
+			
+			
+			
+			function onRelease(obj){
+				var JcropAPI = $('#avatar-Jcrop').data('Jcrop');
+				jcrop_api.animateTo([0, 0, 400, 400]);
+			}
 
+	
 
 		});
 	</script>

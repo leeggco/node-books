@@ -2,7 +2,7 @@
 	<div class="row dedicate_wrap text-center pgcontent">
 		<% for(var i = 0; i < json.length; i++) {%>
 			<div class="item col-md-3  text-center">
-				<a href="/u/<%= json[i].username%>"><img src="<%= json[i].gravatar%>?s=60" width="60" height="60" class="gravatar" alt=""></a>
+				<a href="/u/<%= json[i].username%>"><img src="<%= json[i].gravatar%>" width="60" height="60" class="gravatar" alt=""></a>
 				<div class="item-right">
 					<p class="username"><a href="/u/<%= json[i].username%>"><%= json[i].username%></a></p>
 					<p class="dedicate">贡献分：<span><%= json[i].devote_count%></span></p>
