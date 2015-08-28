@@ -1,6 +1,7 @@
 var moment = require('moment')
 var _ = require('underscore')
 var mongoose = require('mongoose')
+var Pics = require('../models/pics')
 var Book = require('../models/book')
 var User = require('../models/user')
 var Category = require('../models/category')
@@ -114,7 +115,24 @@ exports.tothx = function(req, res){
 				function(err, data){
 					res.send({'status': 'success', 'resTxt': '已感谢 ^_^！'})
 			})
+	})
+}
 
+// 赞每日一图
+exports.tolaud = function(req, res){
+	var from = req.body.from
+	var pid = req.body.pid
+	var _user = req.session.user
+
+	User.findOne({'username': from}, function(err, data){
+		var uid = data._id;
+			Pics.update(
+				{'_id': pid},
+				{$push: {lauds: {'user': uid, 'username': data.username, 'thanks.at':  Date.now }}},
+				{upsert: true },
+				function(err, data){
+					res.send({'status': 'success', 'resTxt': '已赞 ^_^！'})
+			})
 	})
 }
 
@@ -192,14 +210,15 @@ exports.detail = function(req, res){
 			}
 
 			if(!isHased && user){
-				console.log('update!!!')
 				Book.update(
 					{bid: _bid},
 					{
 						$inc: {pv: 1},
 						$push: {
 							visitors: {
-								user: user._id
+								user: user._id,
+								username: user.username,
+								gravatar: user.gravatar
 							}
 						}
 					},
@@ -210,9 +229,10 @@ exports.detail = function(req, res){
 						console.log(data)
 				})
 			}else{
-				console.log('hased!!!')
 				Book.update({bid: _bid},{$inc: {pv: 1}}, function(err, data){
-					console.log('success')
+					if(!err) {
+						console.log('success')
+					}
 				})
 			}
 		})
@@ -225,7 +245,7 @@ exports.detail = function(req, res){
 				{$match: {'bid': temp_bid}},
         {$unwind: '$visitors'},
         {$sort: {'visitors.at': -1}},
-        {$project: {_id: 0, 'visitors.at': 1, 'visitors.user': 1}},
+        {$project: {_id: 0, 'visitors.at': 1, 'visitors.user': 1, 'visitors.username': 1, 'visitors.gravatar': 1}},
         {$limit: 3},
     	], function(err, data){
     		visitors = data
@@ -280,18 +300,32 @@ exports.detail = function(req, res){
 									book.sky_drive = sky_drive;
 								}
 							}
-
-							res.render('detail', {
-								title: book.name + ' | 天天书屋',
-								current:'detail',
-								json: book,
-								category: books.name,
-								comments: comments,
-								visitors: visitors,
-								moment: moment,
-								thxed: thxed,
-								books: books
-							})
+							
+							Pics.find({}, function(err, pic){
+								var lauded = false;
+								for (var i = 0; i < pic[0].lauds.length; i++){
+									if(pic[0].lauds[i].username == req.session.user && req.session.user != undefined){
+										lauded = true
+									}
+								}
+								
+								
+								res.render('detail', {
+									title: book.name + ' | 天天书屋',
+									current:'detail',
+									json: book,
+									category: books.name,
+									comments: comments,
+									visitors: visitors,
+									moment: moment,
+									thxed: thxed,
+									lauded: lauded,
+									pic: pic,
+									books: books
+								})
+							}).sort({_id: -1}).limit(1)
+							console.log(books);
+							console.log(visitors);
 						})
 			})
 		})

@@ -2,6 +2,7 @@ var mongoose = require('mongoose')
 var User = require('../models/user') 
 var moment = require('moment')
 var _ = require('underscore')
+var Pics = require('../models/pics')
 var Comment = require('../models/comment')
 var Community = require('../models/community')
 
@@ -24,15 +25,24 @@ exports.index = function(req, res){
 						data[i].content = data[i].content.substring(0, random) + '...'
 					}
 				}
-				console.log(data)
-				res.render('community', {
-					title:'社区 | 天天书屋', 
-					current:'community', 
-					json: data, 
-					sort:'hot',
-					wd:'',
-					moment: moment
-				})
+				Pics.find({}, function(err, pic){
+					var lauded = false;
+					for (var i = 0; i < pic[0].lauds.length; i++){
+						if(pic[0].lauds[i].username == req.session.user && req.session.user != undefined){
+							lauded = true
+						}
+					}
+					res.render('community', {
+						title:'社区 | 天天书屋', 
+						current:'community', 
+						json: data, 
+						sort:'hot',
+						lauded: lauded,
+						wd:'',
+						pic: pic,
+						moment: moment
+					})
+				}).sort({_id: -1}).limit(1)
 			})
 	}else {
 		Community
@@ -51,15 +61,25 @@ exports.index = function(req, res){
 					}
 				}
 
+			Pics.find({}, function(err, pic){
+				var lauded = false;
+				for (var i = 0; i < pic[0].lauds.length; i++){
+					if(pic[0].lauds[i].username == req.session.user && req.session.user != undefined){
+						lauded = true
+					}
+				}
 				res.render('community', {
 					title:'社区 | 天天书屋', 
 					current:'community', 
 					sort:'new',
+					lauded: lauded,
 					json: data, 
 					wd:'',
+					pic: pic,
 					moment: moment
 				})
-			})
+			}).sort({_id: -1}).limit(1)
+		})
 	}
 
 }
@@ -84,13 +104,24 @@ exports.issuePage = function(req, res){
 						if(err) console.log(err)
 					})
 					data.content = '<p class="elp">' + data.content.replace(/\n/img, '</p><p class="elp">') + '</p>';
-					res.render('issue', {
-						title: data.title +  ' | 天天书屋', 
-						current:'community', 
-						json: data, 
-						comments: comments,
-						moment: moment
-					})
+
+					Pics.find({}, function(err, pic){
+						var lauded = false;
+						for (var i = 0; i < pic[0].lauds.length; i++){
+							if(pic[0].lauds[i].username == req.session.user && req.session.user != undefined){
+								lauded = true
+							}
+						}
+						res.render('issue', {
+							title: data.title +  ' | 天天书屋', 
+							current:'community', 
+							json: data, 
+							lauded: lauded,
+							comments: comments,
+							pic: pic,
+							moment: moment
+						})
+					}).sort({_id: -1}).limit(1)
 				})
 		})
 }
@@ -174,13 +205,24 @@ exports.search = function(req, res){
 			select: 'username gravatar uid'
 		})
 		.exec(function(err, data){
-			res.render('community', {
-				title: '搜索结果页 | 天天书屋',
-				current:'community', 
-				json: data,
-				sort: '',
-				moment: moment,
-				wd: wd
-			})
+			Pics.find({}, function(err, pic){
+				var lauded = false;
+				for (var i = 0; i < pic[0].lauds.length; i++){
+					if(pic[0].lauds[i].username == req.session.user && req.session.user != undefined){
+						lauded = true
+					}
+				}
+				res.render('community', {
+					title: '搜索结果页 | 天天书屋',
+					current:'community', 
+					lauded: lauded,
+					json: data,
+					sort: '',
+					pic: pic,
+					moment: moment,
+					wd: wd
+				})
+			}).sort({_id: -1}).limit(1)
+
 		})
 }

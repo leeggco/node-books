@@ -14,6 +14,11 @@ var PicSchema = new Schema({
 	create_time: { type: Date, default: Date.now },        //创建时间
   update_time: { type: Date, default: Date.now },        //更新时间
   pv: { type: Number, default: 0 },                      //浏览次数
+	lauds: [{                                              //感谢次数
+    user: {type: objectId, ref: 'Users'},
+    username: String,
+    at: {type: Date, default: Date.now }
+  }],
 });
 
 PicSchema.plugin(autoIncrement.plugin, {

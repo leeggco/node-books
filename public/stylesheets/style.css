@@ -159,12 +159,20 @@ span.error { color:#f04848; padding-left:10px;}
 .dbtips {z-index:19; position:absolute; top:6px; width:80px; left:200px; text-align:left;}
 .lgtips { left:270px;}
 .popover  {width:300px;}
-
-
-
-
-
-
+.beaty-wrap  { background-color: #f4f4f4; margin:0 10px; border-radius:1px; border:1px solid #ddd;}
+.beaty-pic {width:300px; min-height:240px; margin:0 auto; padding-top:10px;}
+.beaty-pic img { box-shadow: 0 1px 3px rgba(0,0,0,0.3);}
+.beaty-wrap .pic-from {float:right; display:inline; color:#bababa; text-shadow:1px 1px 1px #fff}
+.beaty-wrap .pic-from a { color:#bababa;}
+.beaty-wrap .mate-box {margin-top:10px; }
+.beaty-wrap .icon {display:inline-block; width:20px; height:19px; color:#999; padding-left:23px; font-size:14px; cursor: pointer; background:url(../images/sprites-1.9-03.png) no-repeat left 2px;}
+.beaty-wrap .icon:hover { background:url(../images/sprites-1.9-03.png) no-repeat left -20px;}
+.tweet .fa-thumbs-o-up {cursor:pointer; font-size:16px; color:#727272}
+.tweet .fa-thumbs-up { font-size:16px; color:#337ab7}
+.tweet .fa-thumbs-o-up:hover {color:#337ab7; }
+.tweet .faoup {color:#999; padding-left:5px;}
+.user-center .beaty-wrap , .user-visitor .beaty-wrap {margin-top:25px; margin-left: 0px; width:340px;}
+.user-center .beaty-pic , .user-visitor  .beaty-pic{padding-top:15px;}
 
 
 

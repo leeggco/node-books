@@ -30,6 +30,8 @@ var BookSchema = new Schema({
   }],
   visitors: [{
     user: {type: objectId, ref: 'Users'},
+		username: String,
+		gravatar: String,
     at: {type: Date, default: Date.now }
   }]
 });

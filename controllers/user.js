@@ -3,6 +3,7 @@ var User = require('../models/user')
 var moment = require('moment') 
 var _ = require('underscore')
 var fs = require('fs')
+var Pics = require('../models/pics')
 var path = require('path')
 var formidable = require('formidable')
 var util = require('util')
@@ -36,12 +37,22 @@ exports.Signout = function(req, res){
 exports.uedit = function(req, res){
   var username = req.session.user
   User.findOne({username: username}, function(err, user){
-    res.render('uedit', {
-      title: '编辑个人资料 | 天天书屋',
-      current: 'uedit',
-      json: user
-    })
-    console.log(user)
+		Pics.find({}, function(err, pic){
+				var lauded = false;
+				for (var i = 0; i < pic[0].lauds.length; i++){
+					if(pic[0].lauds[i].username == req.session.user && req.session.user != undefined){
+						lauded = true
+					}
+				}
+				res.render('uedit', {
+					title: '编辑个人资料 | 天天书屋',
+					current: 'uedit',
+					lauded: lauded,
+					pic: pic,
+					json: user
+				})
+			}).sort({_id: -1}).limit(1)
+
   })
 }
 
@@ -155,14 +166,24 @@ exports.userCenter = function(req, res){
       if(err){
         console.log(err)
       }
-      console.log(data)
-      res.render('u',{
-        title: username + ' | 天天书屋',
-        current: 'userCenter',
-        json: data,
-        moment: moment,
-        visitors: visitors
-      });
+      
+			Pics.find({}, function(err, pic){
+				var lauded = false;
+				for (var i = 0; i < pic[0].lauds.length; i++){
+					if(pic[0].lauds[i].username == req.session.user && req.session.user != undefined){
+						lauded = true
+					}
+				}
+				res.render('u',{
+					title: username + ' | 天天书屋',
+					current: 'userCenter',
+					json: data,
+					moment: moment,
+					lauded: lauded,
+					pic: pic,
+					visitors: visitors
+				});
+			}).sort({_id: -1}).limit(1)
 
       if(username != visitname){
         User.findOne({username: visitname}, function(err, user){

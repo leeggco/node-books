@@ -1,6 +1,5 @@
 $(document).ready(function(){
 	
-	
   $('.issues-search .btn-success').click(function(){
 		$('.new-issue').slideDown(200);
 	})
@@ -37,6 +36,7 @@ $(document).ready(function(){
   	$(this).before('<span class="error">请先登录，再回复</span>')
 		$(this).parent().find('.error').delay(2000).fadeOut(300);
   });
+	
 	
 	
 	//Ajax methods
@@ -133,6 +133,26 @@ $(document).ready(function(){
           _this.unbind('click')
           _this.addClass('iconActived')
 					showResText(data.status, data.resTxt)
+        }
+      }
+    })
+  })
+	
+  $('#tolaud').bind('click', function(){
+    var _this = $(this);
+    var from = _this.attr('data-from');
+    var pid = _this.attr('data-pid');
+
+    $.ajax({
+      type: 'post',
+      url: '/tolaud',
+      data: {'from': from, 'pid': pid},
+      success: function(data){
+        if(data.status === 'success'){
+          _this.unbind('click')
+          _this.addClass('fa-thumbs-up')
+					_this.next().text(parseInt(_this.next().text()) + 1);
+					//showResText(data.status, data.resTxt)
         }
       }
     })

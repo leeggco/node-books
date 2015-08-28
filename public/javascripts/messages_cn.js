@@ -18,6 +18,10 @@ jQuery.extend(jQuery.validator.messages, {
 	min: jQuery.validator.format("长度需最小为{0} 的值")
 });
 
+jQuery.validator.addMethod("stringCheck", function(value, element) {       
+    return this.optional(element) || /^[\u0391-\uFFE5\w]+$/.test(value);       
+ }, "只能包括中文字、英文字母、数字和下划线");  
+
 $(function(){
 	$("#signinForm").validate({
 		rules:{

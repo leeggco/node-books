@@ -127,6 +127,9 @@
       </div>
 
     </div>
+
+
+		
     <% if(books.books.length >= 1){ %>
     <div class="col-md-4 slide-rd">
       <h4 class="recommendation">相关推荐</h4>
@@ -144,17 +147,24 @@
         </div>
       <% } %>
     </div>
-    <% } %>
+    <% } else { %>
+			<% if(pic.length > 0){ %>
+				<div class="col-md-4 slide-rd slide-rd2">
+					<% include lauds.html %>
+				</div>
+			<% } %>
+		<% } %>
 
-    <% if(json.visitors.length > 0){ %>
+		
+    <% if(visitors.length > 0){ %>
     <div class="col-md-4 slide-rd slide-rd2">
       <h4 class="recommendation">谁也来看过</h4>
-      <% for(var i = 0; i < json.visitors.length; i++) {%>
+      <% for(var i = 0; i < visitors.length; i++) {%>
         <div class="rd-item clearfix">
-          <a href="/u/<%= json.visitors[i].user.username %>" class="pull-left"><img src="<%= json.visitors[i].user.gravatar %>" class="gravatar" width="48" alt=""></a>
+          <a href="/u/<%= visitors[i].visitors.username %>" class="pull-left"><img src="<%= visitors[i].visitors.gravatar %>" class="gravatar" width="48" alt=""></a>
           <div class="mate ">
-            <p class="username"><a href="/u/<%= json.visitors[i].user.username %>"><%= json.visitors[i].user.username %></a></p>
-            <p class="vtime date"><%= moment(json.visitors[i].at).format("YYYY-MM-DD HH:mm") %></p>
+            <p class="username"><a href="/u/<%= visitors[i].visitors.username %>"><%= visitors[i].visitors.username %></a></p>
+            <p class="vtime date"><%= moment(visitors[i].visitors.at).format("YYYY-MM-DD HH:mm") %></p>
           </div>
         </div>
       <% } %>

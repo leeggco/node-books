@@ -46,6 +46,9 @@ router.post('/issue_comment', User.singinRequired, Comment.isSave)
 router.get('/issue_operate', User.singinRequired, Comment.isOperate)
 router.post('/commentDel', User.singinRequired, Comment.commentDel)
 
+// Others
+router.post('/tolaud', User.singinRequired, Book.tolaud)
+
 module.exports = router;
 
 

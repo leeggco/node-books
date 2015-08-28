@@ -87,7 +87,12 @@
 			
 		</div>
 
-
+		<% if(pic.length > 0){ %>
+			<div class="col-md-4 slide-rd slide-rd2 user-center">
+				<% include lauds.html %>
+			</div>
+		<% } %>
+		
 		<% if(visitors.length > 0){ %>
     <div class="col-md-4 slide-rd slide-rd2 user-visitor">
     	<div class="profile-section-wrap">

@@ -1,0 +1,14 @@
+	<div class="beaty-wrap">
+		<div class="beaty-pic">
+			<img src="<%= pic[0].small %>" width="300" />
+			<div class="mate-box">
+				<p class="pic-from fr"><a href="https://unsplash.com/" target="_blank">Photo by unsplash.com</a></p>
+				 <% if(lauded) {%>
+					<p class="tweet"><i class="fa fa-thumbs-up" title="已赞"></i><span class="faoup"><%= pic[0].lauds.length %> </span></p>
+				<% }else { %>
+					<p class="tweet"><i class="fa fa-thumbs-o-up" <% if(user) {%> id="tolaud" <%}%> data-from="<%= user %>" data-pid="<%= pic[0]._id %>" ></i><span class="faoup"><%= pic[0].lauds.length %> </span></p>
+				<% } %>
+				
+			</div>
+		</div>
+	</div>
