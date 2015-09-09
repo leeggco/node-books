@@ -2,11 +2,14 @@
 <html>
 <head>
 <title><%= title %> </title>
-  <link rel='stylesheet' href='/stylesheets/style.css'/>
-  <link rel='stylesheet' href='/stylesheets/bootstrap.min.css'/>
-  <link rel='stylesheet' href='/stylesheets/font-awesome.min.css'/>
-  <script src="/javascripts/jquery-1.7.2.min.js"></script>
-	<script src="/javascripts/bootstrap.js"></script>
+  <link rel='stylesheet' href='/css/style.css'/>
+  <link rel='stylesheet' href='/css/bootstrap.min.css'/>
+  <link rel='stylesheet' href='/css/font-awesome.min.css'/>
+  <script src="/js/jquery-1.7.2.min.js"></script>
+  <link rel="stylesheet" href="/css/jquery.emojiarea.css">
+  <link rel="stylesheet" href="/fontello/css/fontello.css">
+  <script src="/js/jquery.emojiarea.js"></script>
+  <script src="/basic/emojis.js"></script>
 
 </head>
 <body>
@@ -44,10 +47,10 @@
         <% } %>
       </div>
       <ul class="nav nav-tabs">
-        <li role="presentation" <% if(current == 'home') { %> class="active" <% } %> ><a href="/">首页</a></li>
-        <li role="presentation" <% if(current == 'newbooks') { %> class="active" <% } %> ><a href="/newbooks">最新收录</a></li>
-        <li role="presentation"<% if(current == 'dedicate') { %> class="active" <% } %> ><a href="/dedicate">贡献排行</a></li>
-        <li role="presentation"<% if(current == 'community') { %> class="active" <% } %>><a href="/community">社区</a></li>
-        <li role="presentation"<% if(current == 'new') { %> class="active" <% } %>><a href="/book/new">新书上传</a></li>
+        <li role="presentation" <% if(current == "home") { %> class="active" <% } %> ><a href="/">首页</a></li>
+        <li role="presentation" <% if(current == "newbooks") { %> class="active" <% } %> ><a href="/newbooks">最新收录</a></li>
+        <li role="presentation"<% if(current == "dedicate") { %> class="active" <% } %> ><a href="/dedicate">贡献排行</a></li>
+        <li role="presentation"<% if(current == "community") { %> class="active" <% } %>><a href="/community">社区</a></li>
+        <li role="presentation"<% if(current == "new") { %> class="active" <% } %>><a href="/book/new">新书上传</a></li>
       </ul>
     </div>

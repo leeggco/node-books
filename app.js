@@ -18,9 +18,9 @@ var app = express();
 
 mongoose.connect(dbUrl, function(err){
   if(err){
-    console.log('MongoDB连接失败');
+    console.log('MongoDB连接失败!');
   }else{
-    console.log('MongoDB连接成功');
+    console.log('MongoDB连接成功!');
   }
 });
 

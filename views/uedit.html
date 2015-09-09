@@ -1,7 +1,7 @@
 <% include header.html %>
-	<script src="/javascripts/jquery.Jcrop.min.js"></script>
-	<script src="/javascripts/ajaxfileupload.js"></script>
-	<link rel='stylesheet' href='/stylesheets/jquery.Jcrop.min.css'/>
+	<script src="/js/jquery.Jcrop.min.js"></script>
+	<script src="/js/ajaxfileupload.js"></script>
+	<link rel='stylesheet' href='/css/jquery.Jcrop.min.css'/>
 	<div class="row userCenter pgcontent">
 		<div class="col-md-8">
 			<div class="profile-hd clearfix">
@@ -101,11 +101,11 @@
 							}, function(){
 								jcrop_api = this;
 								var getBounds = jcrop_api.getBounds();
-								$('.avatar-edit-box').css({
+								/*$('.avatar-edit-box').css({
 									'width': getBounds[0] + 40,
 									'height': getBounds[1]+ 80,
 									'margin-left': - (getBounds[0] + 40) /2 + 'px'
-								});
+								});*/
 								jcrop_api.animateTo([0, 0, 400, 400]);
 							});
 							imgurl = data.imgurl;

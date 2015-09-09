@@ -5,8 +5,17 @@
   <p class="tc">©2008-2014 天天书屋  沪ICP备08115174号</p>
 </div>
 
-<script src="/javascripts/common.js"></script>
-<script src="/javascripts/jquery.validate.min.js"></script>
-<script src="/javascripts/messages_cn.js"></script>
+<script>
+  var $wysiwyg = $('.emojis-wysiwyg').emojiarea({wysiwyg: true});
+  $wysiwyg.on('change', function() {
+	  console.log($(this).val())
+  });
+  $wysiwyg.trigger('change');
+</script>
+
+<script src="/js/common.js"></script>
+<script src="/js/jquery.validate.min.js"></script>
+<script src="/js/messages_cn.js"></script>
+
 </body> 
 </html>

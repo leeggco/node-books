@@ -113,21 +113,23 @@
             <% if(user) { %>
               <input type="hidden" name="from" value="<%= user %>">
             <% } %>
-            <textarea name="content" rows="3"  class="form-control"></textarea>
+            <!--textarea name="content" rows="3" placeholder="Textarea" class="form-control textarea-control" data-emojiable="true"></textarea-->
+						<p class="lead emoji-picker-container">
+						<textarea name="content" class="form-control textarea-control emojis-wysiwyg" rows="3" placeholder="Textarea" data-emojiable="true"></textarea>
+						</p>
             <% if(user) { %>
               <div class="mate pull-left">
                 <a href="/u/<%= user %>" title="<%= user %>"><img src="<%= gravatar %>" class="gravatar" width="32" height="32" alt=""></a><span class="username"> signed as</span><a href="/u/<%= user %>" title="<%= user %>"> <span><%= user %></span></a>
               </div>
               <input type="submit" class="btn btn-success cm-submit pull-right" value="提交">
             <% } else { %>
-              <a href="/signup">登陆后评论</a>
+              <a href="/signin">登陆后评论</a>
             <% } %>
           </form>  
         </div>
       </div>
 
     </div>
-
 
 		
     <% if(books.books.length >= 1){ %>
@@ -171,5 +173,6 @@
     </div>
     <% } %>
   </div>
+
 
 <% include footer.html %>
