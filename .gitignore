@@ -2,5 +2,5 @@
 #
 node_modules/
 bower_components/
-public/images
+public/images/
 npm-debug.log
