@@ -1,0 +1,6 @@
+# node.js
+#
+node_modules/
+bower_components/
+public/images
+npm-debug.log
